@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*- 
 
 import discord
-import json
 from discord import Embed
 from discord.ext import commands
-import colorama
 import json
-from colorama import Fore, Back, Style
 import sys, time
 with open('./config.json', 'r', encoding='utf-8') as cjson:
     config = json.load(cjson)
@@ -14,36 +11,17 @@ with open('./config.json', 'r', encoding='utf-8') as cjson:
 with open('./liste.json', 'r', encoding='utf-8') as ljson:
     list = json.load(ljson)
 
-colorama.init()
 bot = commands.Bot(command_prefix = config["prefix"], description = "Bot de Nathoune")
 
 print('\033[36m' + '                     ██▓    ▓█████      ▄▄▄▄    ▒█████  ▄▄▄█████▓\n                    ▓██▒    ▓█   ▀     ▓█████▄ ▒██▒  ██▒▓  ██▒ ▓▒\n                    ▒██░    ▒███       ▒██▒ ▄██▒██░  ██▒▒ ▓██░ ▒░\n                    ▒██░    ▒▓█  ▄     ▒██░█▀  ▒██   ██░░ ▓██▓ ░ \n                    ░██████▒░▒████    ▒░▓█  ▀█▓░ ████▓▒░  ▒██▒ ░ \n                    ░ ▒░▓  ░░░ ▒░     ░░▒▓███▀▒░ ▒░▒░▒░    ▒ ░░   \n                    ░ ░ ▒  ░ ░ ░      ░▒░▒   ░   ░ ▒ ▒░     ░    \n                      ░ ░      ░        ░    ░ ░ ░ ░ ▒    ░      \n                        ░  ░   ░      ░ ░          ░ ░          ')
 print('\033[39m')
 
-message = "Mise en ligne, veuiller patientez un instant...\n\n"
-message2 = "Tempts estimé : "
-message3 = "5 secondes restantes"
-message4 = " . . . ."
+message = 'Mise en ligne, veuiller patientez un instant...\n\nTempts estimé : 5 secondes restantes . . . .'
 
 for char in message:
     sys.stdout.write(char)
     sys.stdout.flush()
     time.sleep(0.03)
-
-for char in message2:
-    sys.stdout.write(char)
-    sys.stdout.flush()
-    time.sleep(0.0005)
-
-for char in message3:
-    sys.stdout.write(char)
-    sys.stdout.flush()
-    time.sleep(0.05)
-    
-for char in message4:
-    sys.stdout.write(char)
-    sys.stdout.flush()
-    time.sleep(0.15)
 
 @bot.event
 async def on_ready():
@@ -51,18 +29,14 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.online, activity=activity)
     print('\033[32m' + '\n\n                >En ligne< \n\n' + '\033' + '\n\n>>> NE SURTOUT PAS FERMER CETTE FENÊTRE ! LE BOT EST EN LIGNE UNIQUEMENT QUAND CETTE DERNIÈRE EST OUVERTE ! <<<' + '\033[39m' + '\n\n\n®Nathoune 2021')
 
-
+   
 @bot.event
 async def on_message(message):
-    for obj in list:
-        if message.content.lower() == obj['name']:
-            channel = message.channel
-            await channel.send(obj['value'])
-
-
-        
+    
+    [await message.channel.send(o['value']) for o in list if o['name'] == message.content.lower()]
+    
+    
     if message.content.lower() == ("{}h".format(config["prefix"])):
-        channel = message.channel
         embed1 = Embed(title="Commandes et mots :", color=0xffab33)
         embed1.add_field(name="{}h".format(config["prefix"]), value="Envoyer ce message", inline=False)
         embed1.add_field(name="{}news".format(config["prefix"]), value="Afficher les nouveautés !", inline=True)
@@ -102,7 +76,6 @@ async def on_message(message):
         await message.channel.send(embed=embed1)
         
     if message.content.lower() == ("{}news".format(config["prefix"])):
-        channel = message.channel
         embed1 = Embed(title="Voici le nouveautés !", color=0xffab33)
         embed1.add_field(name="Discord", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Ban", value="Réponse de Le_Bot", inline=False)
