@@ -26,19 +26,19 @@ for char in message:
 async def on_ready():
     activity = discord.Game(name="être inutile", type=1)
     await bot.change_presence(status=discord.Status.online, activity=activity)
-    print('\n\n                >En ligne< \n\n\n\n>>> NE SURTOUT PAS FERMER CETTE FENÊTRE ! LE BOT EST EN LIGNE UNIQUEMENT QUAND CETTE DERNIÈRE EST OUVERTE ! <<<\n\n\n®Nathoune 2022')
+    print('\n\n\n                >En ligne< \n\n\n\n>>> NE SURTOUT PAS FERMER CETTE FENÊTRE ! LE BOT EST EN LIGNE UNIQUEMENT QUAND CETTE DERNIÈRE EST OUVERTE ! <<<\n\n\n®Nathoune 2022')
 
    
 @bot.event
 async def on_message(message):
     
     [await message.channel.send(o['value']) for o in list if o['name'] == message.content.lower()]
-   
+       
     if message.content.lower() == ("{}h".format(config["prefix"])):
         embed1 = Embed(title="Commandes et mots :", color=0xffab33)
         embed1.add_field(name="{}h".format(config["prefix"]), value="Envoyer ce message", inline=False)
-        embed1.add_field(name="{}news".format(config["prefix"]), value="Afficher les nouveautés !", inline=True)
-        embed1.add_field(name="{}serveur".format(config["prefix"]), value="Pour pouvoir rejoindre le serveur Discord !", inline=True)
+        embed1.add_field(name="{}news".format(config["prefix"]), value="Afficher les nouveautés !", inline=False)
+        embed1.add_field(name="{}serveur".format(config["prefix"]), value="Pour pouvoir rejoindre le serveur Discord !", inline=False)
         embed1.add_field(name="Salut", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Yo", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Comment tu vas ?", value="Réponse de Le_Bot", inline=False)
@@ -58,7 +58,7 @@ async def on_message(message):
         embed1.add_field(name="Le bot est nul", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Tu sers à rien", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Re", value="Réponse de Le_Bot", inline=False)
-        embed1.add_field(name="Nthoune", value="Réponse de Le_Bot", inline=False)
+        embed1.add_field(name="Nathoune", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Bien et toi ?", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Bien et toi", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Raid", value="Réponse de Le_Bot", inline=False)
@@ -76,6 +76,7 @@ async def on_message(message):
         
     if message.content.lower() == ("{}news".format(config["prefix"])):
         embed1 = Embed(title="Voici le nouveautés !", color=0xffab33)
+        embed1.add_field(name="!serveur", value="Pour pouvoir rejoindre le serveur Discord !", inline=False)
         embed1.add_field(name="Discord", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Ban", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Bannir", value="Réponse de Le_Bot", inline=False)
