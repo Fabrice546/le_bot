@@ -11,12 +11,11 @@ with open('./config.json', 'r', encoding='utf-8') as cjson:
 with open('./liste.json', 'r', encoding='utf-8') as ljson:
     list = json.load(ljson)
 
-bot = commands.Bot(command_prefix = config["prefix"], description = "Bot de Nathoune")
+bot = commands.Bot(command_prefix = config["prefix"], description = "Le_Bot")
 
-print('\033[36m' + '                     ██▓    ▓█████      ▄▄▄▄    ▒█████  ▄▄▄█████▓\n                    ▓██▒    ▓█   ▀     ▓█████▄ ▒██▒  ██▒▓  ██▒ ▓▒\n                    ▒██░    ▒███       ▒██▒ ▄██▒██░  ██▒▒ ▓██░ ▒░\n                    ▒██░    ▒▓█  ▄     ▒██░█▀  ▒██   ██░░ ▓██▓ ░ \n                    ░██████▒░▒████    ▒░▓█  ▀█▓░ ████▓▒░  ▒██▒ ░ \n                    ░ ▒░▓  ░░░ ▒░     ░░▒▓███▀▒░ ▒░▒░▒░    ▒ ░░   \n                    ░ ░ ▒  ░ ░ ░      ░▒░▒   ░   ░ ▒ ▒░     ░    \n                      ░ ░      ░        ░    ░ ░ ░ ░ ▒    ░      \n                        ░  ░   ░      ░ ░          ░ ░          ')
-print('\033[39m')
+print('                     ██▓    ▓█████      ▄▄▄▄    ▒█████  ▄▄▄█████▓\n                    ▓██▒    ▓█   ▀     ▓█████▄ ▒██▒  ██▒▓  ██▒ ▓▒\n                    ▒██░    ▒███       ▒██▒ ▄██▒██░  ██▒▒ ▓██░ ▒░\n                    ▒██░    ▒▓█  ▄     ▒██░█▀  ▒██   ██░░ ▓██▓ ░ \n                    ░██████▒░▒████    ▒░▓█  ▀█▓░ ████▓▒░  ▒██▒ ░ \n                    ░ ▒░▓  ░░░ ▒░     ░░▒▓███▀▒░ ▒░▒░▒░    ▒ ░░   \n                    ░ ░ ▒  ░ ░ ░      ░▒░▒   ░   ░ ▒ ▒░     ░    \n                      ░ ░      ░        ░    ░ ░ ░ ░ ▒    ░      \n                        ░  ░   ░      ░ ░          ░ ░          ')
 
-message = 'Mise en ligne, veuiller patientez un instant...\n\nTempts estimé : 5 secondes restantes . . . .'
+message = '\nMise en ligne, veuiller patientez un instant...\n\nTempts estimé : 5 secondes restantes . . . .'
 
 for char in message:
     sys.stdout.write(char)
@@ -27,19 +26,19 @@ for char in message:
 async def on_ready():
     activity = discord.Game(name="être inutile", type=1)
     await bot.change_presence(status=discord.Status.online, activity=activity)
-    print('\033[32m' + '\n\n                >En ligne< \n\n' + '\033' + '\n\n>>> NE SURTOUT PAS FERMER CETTE FENÊTRE ! LE BOT EST EN LIGNE UNIQUEMENT QUAND CETTE DERNIÈRE EST OUVERTE ! <<<' + '\033[39m' + '\n\n\n®Nathoune 2021')
+    print('\n\n                >En ligne< \n\n\n\n>>> NE SURTOUT PAS FERMER CETTE FENÊTRE ! LE BOT EST EN LIGNE UNIQUEMENT QUAND CETTE DERNIÈRE EST OUVERTE ! <<<\n\n\n®Nathoune 2022')
 
    
 @bot.event
 async def on_message(message):
     
     [await message.channel.send(o['value']) for o in list if o['name'] == message.content.lower()]
-    
-    
+   
     if message.content.lower() == ("{}h".format(config["prefix"])):
         embed1 = Embed(title="Commandes et mots :", color=0xffab33)
         embed1.add_field(name="{}h".format(config["prefix"]), value="Envoyer ce message", inline=False)
         embed1.add_field(name="{}news".format(config["prefix"]), value="Afficher les nouveautés !", inline=True)
+        embed1.add_field(name="{}serveur".format(config["prefix"]), value="Pour pouvoir rejoindre le serveur Discord !", inline=True)
         embed1.add_field(name="Salut", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Yo", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Comment tu vas ?", value="Réponse de Le_Bot", inline=False)
@@ -90,5 +89,8 @@ async def on_message(message):
         embed1.set_image(url="https://cdn-0.emojis.wiki/emoji-pics/facebook/ok-hand-facebook.png")     
         await message.channel.send(embed=embed1)
 
-    
+    if message.content.lower() == ("{}serveur".format(config["prefix"])):
+        channel = message.channel
+        await channel.send('**Voici le serveur Nathoune_Serveur Résurection** : https://discord.gg/b6jjy5yKXV')
+
 bot.run(config["token"])
