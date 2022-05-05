@@ -87,7 +87,8 @@ async def on_message(message):
         
     if message.content.lower() == ("{}news".format(config["prefix"])):
         embed1 = Embed(title="Voici le nouveautés !", color=0xffab33)
-        embed1.add_field(name="!serveur", value="Pour pouvoir rejoindre le serveur Discord !", inline=False)
+        embed1.add_field(name="{}serveur".format(config["prefix"]), value="Pour pouvoir rejoindre le serveur Discord !", inline=False)
+        embed1.add_field(name="{}confidentiality".format(config["prefix"]), value="Connaître la politique de confidentialité.", inline=False)
         embed1.add_field(name="Discord", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Ban", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Bannir", value="Réponse de Le_Bot", inline=False)
