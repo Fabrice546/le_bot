@@ -39,6 +39,7 @@ def main():
         embed1.add_field(name="{}news".format(config["prefix"]), value="Afficher les nouveautés !", inline=False)
         embed1.add_field(name="{}serveur".format(config["prefix"]), value="Pour pouvoir rejoindre le serveur Discord !", inline=False)
         embed1.add_field(name="{}confidentiality".format(config["prefix"]), value="Connaître la politique de confidentialité.", inline=False)
+        embed1.set_footer(text="🚨Réinvite moi pour pouvoir changer de pages : \nhttps://bit.ly/discord-le-bot ou clique sur le bouton bleu sur mon profil🚨")
 
         page2 = embed2 = Embed(title="Mots (page 1) :", color=0xffab33)
         embed2.add_field(name="Salut", value="Réponse", inline=True)
@@ -83,6 +84,7 @@ def main():
         embed2.add_field(name="Bannir", value="Réponse", inline=True)
         embed2.add_field(name="Ban", value="Réponse", inline=True)
         embed2.add_field(name="Discord", value="Réponse", inline=True)
+        embed2.set_footer(text="🚨Réinvite moi pour pouvoir changer de pages : \nhttps://bit.ly/discord-le-bot ou clique sur le bouton bleu sur mon profil🚨")
 
         page3 = embed3 = Embed(title="Mots (page 2) :", color=0xffab33)
         embed3.add_field(name="Ta gueule", value="Réponse", inline=True)
@@ -102,8 +104,13 @@ def main():
         embed3.add_field(name="Bannir", value="Réponse", inline=True)
         embed3.add_field(name="Ban", value="Réponse", inline=True)
         embed3.add_field(name="Discord", value="Réponse", inline=True)
+        embed3.set_footer(text="🚨Réinvite moi pour pouvoir changer de pages : \nhttps://bit.ly/discord-le-bot ou clique sur le bouton bleu sur mon profil🚨")
 
-        bot.help_pages = [page1, page2, page3]
+        page4 = embed4 = Embed(title="Informations :", color=0xffab33)
+        embed4.add_field(name="Le_Bot, votre bot intéractif !", value="Le_Bot répondra à certains de vos mots en ajoutant de l'humour et du dynamisme sur votre serveur !\nSon code source se trouve sur GitHub, il est donc opensource ! Voici son lien : https://github.com/Nathoune-YT/le_bot. Vous pouvez l'améliorer ou simplement l'utiliser tout en suivant la procédure présente dans le README.\nVoici la politique de confidentialité : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt", inline=True)
+        embed4.set_footer(text="🚨Réinvite moi pour pouvoir changer de pages : \nhttps://bit.ly/discord-le-bot ou clique sur le bouton bleu sur mon profil🚨")
+
+        bot.help_pages = [page1, page2, page3, page4]
 
         @bot.event
         async def on_ready():
