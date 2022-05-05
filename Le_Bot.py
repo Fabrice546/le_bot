@@ -49,6 +49,7 @@ async def on_message(message):
         embed1.add_field(name="{}h".format(config["prefix"]), value="Envoyer ce message", inline=False)
         embed1.add_field(name="{}news".format(config["prefix"]), value="Afficher les nouveautés !", inline=False)
         embed1.add_field(name="{}serveur".format(config["prefix"]), value="Pour pouvoir rejoindre le serveur Discord !", inline=False)
+        embed1.add_field(name="{}confidentiality".format(config["prefix"]), value="Connaître la politique de confidentialité.", inline=False)
         embed1.add_field(name="Salut", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Yo", value="Réponse de Le_Bot", inline=False)
         embed1.add_field(name="Comment tu vas ?", value="Réponse de Le_Bot", inline=False)
@@ -103,5 +104,9 @@ async def on_message(message):
     if message.content.lower() == ("{}serveur".format(config["prefix"])):
         channel = message.channel
         await channel.send('**Voici le serveur Nathoune_Serveur Résurection** : https://discord.gg/b6jjy5yKXV')
+      
+    if message.content.lower() == ("{}confidentiality".format(config["prefix"])):
+        channel = message.channel
+        await channel.send('**Voici la politique de condfidentialité de Le_Bot** : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt')    
 
 bot.run(config["token"])
