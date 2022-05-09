@@ -149,7 +149,7 @@
     },
     {
         "name": "abonnement",
-        "value": "Go > https://www.youtube.com/Nathoune/c/?sub_confirmation=1"
+        "value": "Go :point_right: https://www.youtube.com/Nathoune/c/?sub_confirmation=1"
     },
     {
         "name": "hello",
@@ -166,5 +166,33 @@
     {
         "name": "youtube",
         "value": "YouTube est un site web d’hébergement de vidéos et un média social sur lequel les utilisateurs peuvent envoyer, regarder, commenter, évaluer et partager des vidéos en streaming. Wikip.. non moi même mdr (crois moi stp)"
+    },
+    {
+        "name": "feur",
+        "value": "Alors toi ça va te ban :rage:"
+    },
+    {
+        "name": "nyan cat",
+        "value": "https://tenor.com/view/nyan-cat-rainbow-cat-kitten-kitty-gif-5716621"
+    },
+    {
+        "name": "paypal",
+        "value": "Si tu insistes... :rolling_eyes::point_right: https://www.paypal.com/paypalme/NathouneYoutube"
+    },
+    {
+        "name": "coucou",
+        "value": "Coucou (et pas l'oiseau :joy::joy: c'est pas drôle en vrai)"
+    },
+    {
+        "name": "gpu",
+        "value": "Ta carte graphique (#le_bot_prof :man_teacher:)"
+    },
+    {
+        "name": "cpu",
+        "value": "Ton processeur (#le_bot_prof :man_teacher:)"
+    },
+    {
+        "name": "ram",
+        "value": "Ta mémoire vive (#le_bot_prof :man_teacher:)"
     }
 ]
