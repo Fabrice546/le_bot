@@ -15,92 +15,41 @@ bot = commands.Bot(command_prefix= config["prefix"], help_command=None)
 
 def main():
     try:
-        print('''
-                    ██▓   ▓█████      ▄▄▄▄    ▒█████  ▄▄▄█████▓
-                    ▓██▒   ▓█   ▀     ▓█████▄ ▒██▒  ██▒▓  ██▒ ▓▒
-                    ▒██░   ▒███       ▒██▒ ▄██▒██░  ██▒▒ ▓██░ ▒░
-                    ▒██░   ▒▓█  ▄     ▒██░█▀  ▒██   ██░░ ▓██▓ ░
-                    ░██████░▒████    ▒░▓█  ▀█▓░ ████▓▒░  ▒██▒ ░
-                    ░ ▒░▓  ░░ ▒░     ░░▒▓███▀▒░ ▒░▒░▒░   ▒ ░░
-                    ░ ░ ▒   ░ ░      ░▒░▒   ░   ░ ▒ ▒░     ░
-                    ░ ░     ░        ░    ░ ░ ░ ░ ▒    ░ ░
-                        ░     ░      ░ ░          ░ ░
-        ''')
 
-        message = '\nMise en ligne, veuiller patientez un instant...\n\nTempts estimé : 5 secondes restantes . . . .'
+        page1 = embed1 = discord.Embed(title="⚙️ Commandes :\n", color=0xffab33)
+        embed1.add_field(name="📃 {}h".format(config["prefix"]), value="`Envoyer ce message.`")
+        embed1.add_field(name="📑 {}news".format(config["prefix"]), value="`Afficher les nouveautés.`", inline=False)
+        embed1.add_field(name="📞 {}serveur".format(config["prefix"]), value="`Pour pouvoir rejoindre le serveur Discord.`", inline=False)
+        embed1.add_field(name="🗒️ {}confidentiality".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
+        embed1.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
+        embed1.set_footer(text="\n ▶️ Mots | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://bit.ly/discord-le-bot ou clique sur le bouton bleu sur mon profil🚨")
 
-        for char in message:
-            sys.stdout.write(char)
-            sys.stdout.flush()
-            time.sleep(0.03)
+        page2 = embed2 = discord.Embed(title="📋 Mots :", color=0xffab33,
+        description="""`
+🟡 Salut              🟡 Le bot est éclaté    🟡 Lol
+🟡 Yo                 🟡 Le bot est nul       🟡 YouTube
+🟡 Comment tu vas ?   🟡 Tu sers à rien       🟡 3D
+🟡 Bonjour            🟡 Re                   🟡 VFX
+🟡 Aide moi           🟡 Nathoune             🟡 Hello
+🟡 Aide-moi           🟡 Bien et toi ?        🟡 Abonnement
+🟡 Bravo              🟡 Bien et toi          🟡 Java
+🟡 Pourquoi ?         🟡 Raid                 🟡 Python
+🟡 Pourquoi ?         🟡 Tg le bot            🟡 Bannir
+🟡 Pk                 🟡 Tg                   🟡 Ban
+🟡 Pk ?               🟡 Ta gueule le bot     🟡 Discord
+🟡 Mdr                🟡 Putain               🟡 Feur
+🟡 Ptdr               🟡 Merde                🟡 Nyan Cat
+🟡 Bot                🟡 Jsp                  🟡 Paypal
+🟡 Le bot             🟡 Je sais pas          🟡 Coucou
+🟡 GPU                🟡 CPU                  🟡 RAM
+`""")
+        embed2.set_footer(text="\nDébut ⏪ | Commandes ◀️ | ▶️ Informations | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://bit.ly/discord-le-bot ou clique sur le bouton bleu sur mon profil🚨")
 
-        page1 = embed1 = Embed(title="Commandes :", color=0xffab33)
-        embed1.add_field(name="{}h".format(config["prefix"]), value="Envoyer ce message", inline=False)
-        embed1.add_field(name="{}news".format(config["prefix"]), value="Afficher les nouveautés !", inline=False)
-        embed1.add_field(name="{}serveur".format(config["prefix"]), value="Pour pouvoir rejoindre le serveur Discord !", inline=False)
-        embed1.add_field(name="{}confidentiality".format(config["prefix"]), value="Connaître la politique de confidentialité.", inline=False)
-        embed1.set_footer(text="🚨Réinvite moi pour pouvoir changer de pages : \nhttps://bit.ly/discord-le-bot ou clique sur le bouton bleu sur mon profil🚨")
+        page3 = embed3 = Embed(title="📂 Informations :", color=0xffab33)
+        embed3.add_field(name="Le_Bot, votre bot intéractif !", value="▶️ Le_Bot répondra à certains de vos mots en ajoutant de l'humour et du dynamisme sur votre serveur !\n\n ▶️ Son code source se trouve sur GitHub, il est donc opensource ! Voici son lien : https://github.com/Nathoune-YT/le_bot. Vous pouvez l'améliorer ou simplement l'utiliser tout en suivant la procédure présente dans le README.\n\n ▶️ Voici la politique de confidentialité : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt", inline=True)
+        embed3.set_footer(text="\nDébut ⏪ | Mots ◀️\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://bit.ly/discord-le-bot ou clique sur le bouton bleu sur mon profil🚨")
 
-        page2 = embed2 = Embed(title="Mots (page 1) :", color=0xffab33)
-        embed2.add_field(name="Salut", value="Réponse", inline=True)
-        embed2.add_field(name="Yo", value="Réponse", inline=True)
-        embed2.add_field(name="Comment tu vas ?", value="Réponse", inline=True)
-        embed2.add_field(name="Bonjour", value="Réponse", inline=True)
-        embed2.add_field(name="Aide moi", value="Réponse", inline=True)
-        embed2.add_field(name="Aide-moi", value="Réponse", inline=True)
-        embed2.add_field(name="Bravo", value="Réponse", inline=True)
-        embed2.add_field(name="Pourquoi ?", value="Réponse", inline=True)
-        embed2.add_field(name="Pourquoi ?", value="Réponse", inline=True)
-        embed2.add_field(name="Pk", value="Réponse", inline=True)
-        embed2.add_field(name="Pk ?", value="Réponse", inline=True)
-        embed2.add_field(name="Mdr", value="Réponse", inline=True)
-        embed2.add_field(name="Ptdr", value="Réponse", inline=True)
-        embed2.add_field(name="Bot", value="Réponse", inline=True)
-        embed2.add_field(name="Le bot", value="Réponse", inline=True)
-        embed2.add_field(name="Le bot est éclaté", value="Réponse", inline=True)
-        embed2.add_field(name="Le bot est nul", value="Réponse", inline=True)
-        embed2.add_field(name="Tu sers à rien", value="Réponse", inline=True)
-        embed2.add_field(name="Re", value="Réponse", inline=True)
-        embed2.add_field(name="Nathoune", value="Réponse", inline=True)
-        embed2.add_field(name="Bien et toi ?", value="Réponse", inline=True)
-        embed2.add_field(name="Bien et toi", value="Réponse", inline=True)
-        embed2.add_field(name="Raid", value="Réponse", inline=True)
-        embed2.add_field(name="Tg le bot", value="Réponse", inline=True)
-        embed2.add_field(name="Tg", value="Réponse", inline=True)
-        embed2.set_footer(text="🚨Réinvite moi pour pouvoir changer de pages : \nhttps://bit.ly/discord-le-bot ou clique sur le bouton bleu sur mon profil🚨")
-
-        page3 = embed3 = Embed(title="Mots (page 2) :", color=0xffab33)
-        embed3.add_field(name="Ta gueule", value="Réponse", inline=True)
-        embed3.add_field(name="Ta gueule le bot", value="Réponse", inline=True)
-        embed3.add_field(name="Putain", value="Réponse", inline=True)
-        embed3.add_field(name="Merde", value="Réponse", inline=True)
-        embed3.add_field(name="Jsp", value="Réponse", inline=True)
-        embed3.add_field(name="Je sais pas", value="Réponse", inline=True)
-        embed3.add_field(name="Lol", value="Réponse", inline=True)  
-        embed3.add_field(name="YouTube", value="Réponse", inline=True)
-        embed3.add_field(name="3D", value="Réponse", inline=True)
-        embed3.add_field(name="VFX", value="Réponse", inline=True)
-        embed3.add_field(name="Hello", value="Réponse", inline=True)
-        embed3.add_field(name="Abonnement", value="Réponse", inline=True)
-        embed3.add_field(name="Java", value="Réponse", inline=True)
-        embed3.add_field(name="Python", value="Réponse", inline=True)
-        embed3.add_field(name="Bannir", value="Réponse", inline=True)
-        embed3.add_field(name="Ban", value="Réponse", inline=True)
-        embed3.add_field(name="Discord", value="Réponse", inline=True)
-        embed3.add_field(name="Feur", value="Réponse", inline=True)
-        embed3.add_field(name="Nyan Cat", value="Réponse", inline=True)
-        embed3.add_field(name="Paypal", value="Réponse", inline=True)
-        embed3.add_field(name="Coucou", value="Réponse", inline=True)
-        embed3.add_field(name="GPU", value="Réponse", inline=True)
-        embed3.add_field(name="CPU", value="Réponse", inline=True)
-        embed3.add_field(name="RAM", value="Réponse", inline=True)
-        embed3.set_footer(text="🚨Réinvite moi pour pouvoir changer de pages : \nhttps://bit.ly/discord-le-bot ou clique sur le bouton bleu sur mon profil🚨")
-
-        page4 = embed4 = Embed(title="Informations :", color=0xffab33)
-        embed4.add_field(name="Le_Bot, votre bot intéractif !", value="Le_Bot répondra à certains de vos mots en ajoutant de l'humour et du dynamisme sur votre serveur !\nSon code source se trouve sur GitHub, il est donc opensource ! Voici son lien : https://github.com/Nathoune-YT/le_bot. Vous pouvez l'améliorer ou simplement l'utiliser tout en suivant la procédure présente dans le README.\nVoici la politique de confidentialité : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt", inline=True)
-        embed4.set_footer(text="🚨Réinvite moi pour pouvoir changer de pages : \nhttps://bit.ly/discord-le-bot ou clique sur le bouton bleu sur mon profil🚨")
-
-        bot.help_pages = [page1, page2, page3, page4]
+        bot.help_pages = [page1, page2, page3]
 
         @bot.event
         async def on_ready():
@@ -163,16 +112,22 @@ def main():
 
         @bot.command()
         async def news(ctx):
-            embed1 = Embed(title="Voici le nouveautés !", color=0xffab33)
-            embed1.add_field(name="{}serveur".format(config["prefix"]), value="Pour pouvoir rejoindre le serveur Discord !", inline=False)
-            embed1.add_field(name="{}confidentiality".format(config["prefix"]), value="Connaître la politique de confidentialité.", inline=False)
-            embed1.add_field(name="Feur", value="Réponse", inline=True)
-            embed1.add_field(name="Paypal", value="Réponse", inline=True) 
-            embed1.add_field(name="Nyan Cat", value="Réponse", inline=True) 
-            embed1.add_field(name="Coucou", value="Réponse", inline=True) 
-            embed1.add_field(name="GPU", value="Réponse", inline=True) 
-            embed1.add_field(name="CPU", value="Réponse", inline=True) 
-            embed1.add_field(name="RAM", value="Réponse", inline=True) 
+            embed4 = discord.Embed(title="📈 Nouvelles commandes :", color=0xffab33)
+            embed4.add_field(name="📞 {}serveur".format(config["prefix"]), value="`Pour pouvoir rejoindre le serveur Discord.`", inline=False)
+            embed4.add_field(name="🗒️ {}confidentiality".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
+            embed4.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
+            await ctx.channel.send(embed=embed4)
+            embed5 = discord.Embed(title="⏏️ Nouveaux mots :", color=0xffab33, description="""`
+🟡 Feur            🟡 RAM    
+🟡 Paypal          🟡 GPU   
+🟡 Nyan Cat        🟡 CPU   
+`""")
+            await ctx.channel.send(embed=embed5)
+        
+        @bot.command()
+        async def how_work(ctx):
+            embed1 = Embed(title="Comment utiliser la nouvelle commande 'help' !", color=0xffab33)
+            embed1.set_image(url="https://i.imgur.com/Cg7HKRQ.gif") 
             await ctx.channel.send(embed=embed1)
 
         bot.run(config["token"])
