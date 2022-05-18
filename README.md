@@ -14,6 +14,12 @@
 
 Le_Bot est un bot interactif qui réagit à certains mots et dynamise votre serveur Discord ! Il peut se rendre très sympatique ou diabolique (je comprends qu'il vous énerve lol). Vous pouvez directement [ajouter Le_Bot](https://discord.com/oauth2/authorize?client_id=881098458482753586&permissions=2048&scope=bot) à votre serveur, il possédera les réponses aux mots présents dans le `liste.json`.  
 
+La commande `help` est devenue dynamique ! Voici la démonstration :
+
+![Demo_help](https://github.com/Nathoune-YT/le_bot/blob/main/Images/Demo_help.gif)
+
+Le_Bot a été certfié par Discord ! <a href="https://discord.com/oauth2/authorize?client_id=881098458482753586&permissions=10240&scope=bot"><img src="https://i.imgur.com/5dqIQGd.png" width="60"></a>
+
 [L'installation](#installation) est simple et rapide.
 
 # Installation
@@ -40,6 +46,6 @@ Retrouvez ci-dessous le [lien du serveur Discord](https://discord.gg/b6jjy5yKXV)
   <tr>
     <a href="https://discord.gg/b6jjy5yKXV"><img src="https://i.imgur.com/Iifi5e1.png" width="276"></a>
     <a href="https://www.youtube.com/c/Nathoune"><img src="https://i.imgur.com/8ouURXj.png" width="276"></a>
-    <a href="https://discord.com/oauth2/authorize?client_id=881098458482753586&permissions=2048&scope=bot"><img src="https://i.imgur.com/eixR2E8.png" width="276"></a>
+    <a href="https://discord.com/oauth2/authorize?client_id=881098458482753586&permissions=10240&scope=bot"><img src="https://i.imgur.com/eixR2E8.png" width="276"></a>
   </tr>
 </table>
