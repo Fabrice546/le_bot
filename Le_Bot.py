@@ -145,7 +145,7 @@ def main():
         @bot.command()
         async def how_work(ctx):
             embed1 = Embed(title="Comment utiliser la nouvelle commande 'help' !", color=0xffab33)
-            embed1.set_image(url="https://i.imgur.com/Cg7HKRQ.gif") 
+            embed1.set_image(url="https://i.imgur.com/m4YqCHC.gif") 
             await ctx.channel.send(embed=embed1)
 
         bot.run(config["token"])
