@@ -40,6 +40,7 @@ def main():
         embed1.add_field(name="📞 {}serveur".format(config["prefix"]), value="`Pour pouvoir rejoindre le serveur Discord.`", inline=False)
         embed1.add_field(name="🗒️ {}confidentiality".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
         embed1.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
+        embed1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
         embed1.set_footer(text="\n ▶️ Mots | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://bit.ly/discord-le-bot ou clique sur le bouton bleu sur mon profil🚨")
 
         page2 = embed2 = discord.Embed(title="📋 Mots :", color=0xffab33,
@@ -122,11 +123,11 @@ def main():
 
         @bot.command()
         async def confidentiality(ctx):
-            await ctx.send("**Voici la politique de condfidentialité de Le_Bot** : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
+            await ctx.reply("**Voici la politique de condfidentialité de Le_Bot** : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
 
         @bot.command()
         async def serveur(ctx):
-            await ctx.send("**Voici le serveur Nathoune_Serveur Résurection** : https://discord.gg/b6jjy5yKXV")
+            await ctx.reply("**Voici le serveur Nathoune_Serveur Résurection** : https://discord.gg/b6jjy5yKXV")
 
         @bot.command()
         async def news(ctx):
@@ -134,6 +135,7 @@ def main():
             embed4.add_field(name="📞 {}serveur".format(config["prefix"]), value="`Pour pouvoir rejoindre le serveur Discord.`", inline=False)
             embed4.add_field(name="🗒️ {}confidentiality".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
             embed4.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
+            embed4.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
             await ctx.channel.send(embed=embed4)
             embed5 = discord.Embed(title="⏏️ Nouveaux mots :", color=0xffab33, description="""`
 🟡 Feur            🟡 RAM    
@@ -144,9 +146,15 @@ def main():
         
         @bot.command()
         async def how_work(ctx):
-            embed1 = Embed(title="Comment utiliser la nouvelle commande 'help' !", color=0xffab33)
-            embed1.set_image(url="https://i.imgur.com/m4YqCHC.gif") 
-            await ctx.channel.send(embed=embed1)
+            embed6 = discord.Embed(title="Comment utiliser la nouvelle commande 'help' !", color=0xffab33)
+            embed6.set_image(url="https://i.imgur.com/m4YqCHC.gif") 
+            await ctx.channel.send(embed=embed6)
+
+        @bot.command()
+        async def github(ctx):
+            embed7 = discord.Embed(title="🔗 Le_Bot est opensource et son code se trouve sur GitHub !", color=0xffab33, url="https://github.com/Nathoune-YT/le_bot")
+            embed7.add_field(name="🌍 Informations", value="Le_Bot est opensource et se trouve sur GitHub (https://github.com/Nathoune-YT/le_bot). Vous pouvez simplement regarder le script, le modifier et m'envoyer une pull request pour peut-être voir vos modifications dans le code officiel de Le_Bot ou l'utiliser et le modifier tout en suivant la procédure à lire dans le README !")
+            await ctx.channel.send(embed=embed7)
 
         bot.run(config["token"])
 
