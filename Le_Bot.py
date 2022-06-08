@@ -42,7 +42,7 @@ def main():
         embed1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot`", inline=False)
         embed1.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
         embed1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
-        embed1.set_footer(text="\n ▶️ Mots | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.gq ou clique sur le bouton bleu sur mon profil🚨")
+        embed1.set_footer(text="\n ▶️ Mots | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
 
         page2 = embed2 = discord.Embed(title="📋 Mots :", color=0xffab33,
         description="""`
@@ -67,7 +67,7 @@ def main():
 
         page3 = embed3 = Embed(title="📂 Informations :", color=0xffab33)
         embed3.add_field(name="Le_Bot, votre bot interactif !", value="▶️ Le_Bot répondra à certains de vos mots en ajoutant de l'humour et du dynamisme sur votre serveur !\n\n ▶️ Son code source se trouve sur GitHub, il est donc opensource ! Voici son lien : https://github.com/Nathoune-YT/le_bot. Vous pouvez l'améliorer ou simplement l'utiliser tout en suivant la procédure présente dans le README.\n\n ▶️ Voici la politique de confidentialité : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt", inline=True)
-        embed3.set_footer(text="\nDébut ⏪ | Mots ◀️\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.gq ou clique sur le bouton bleu sur mon profil🚨")
+        embed3.set_footer(text="\nDébut ⏪ | Mots ◀️\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
 
         bot.help_pages = [page1, page2, page3]
 
@@ -160,8 +160,8 @@ def main():
 
         @bot.command()
         async def site(ctx):
-            embed7 = discord.Embed(title="Le site web officiel de Le_Bot", color=0xffab33, url="https://le-bot.gq")
-            embed7.add_field(name="Le lien du site officiel :", value="https://le-bot.gq")
+            embed7 = discord.Embed(title="Le site web officiel de Le_Bot", color=0xffab33, url="https://le-bot.cf")
+            embed7.add_field(name="Le lien du site officiel :", value="https://le-bot.cf")
             await ctx.channel.send(embed=embed7)
 
         bot.run(config["token"])
