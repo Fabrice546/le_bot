@@ -66,7 +66,7 @@ def main():
         embed2.set_footer(text="\nDébut ⏪ | Commandes ◀️ | ▶️ Informations | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.gq ou clique sur le bouton bleu sur mon profil🚨")
 
         page3 = embed3 = Embed(title="📂 Informations :", color=0xffab33)
-        embed3.add_field(name="Le_Bot, votre bot interactif !", value="▶️ Le_Bot répondra à certains de vos mots en ajoutant de l'humour et du dynamisme sur votre serveur !\n\n ▶️ Son code source se trouve sur GitHub, il est donc opensource ! Voici son lien : https://github.com/Nathoune-YT/le_bot. Vous pouvez l'améliorer ou simplement l'utiliser tout en suivant la procédure présente dans le README.\n\n ▶️ Voici la politique de confidentialité : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt", inline=True)
+        embed3.add_field(name="Le_Bot, votre bot interactif !", value="▶️ Le_Bot répondra à certains de vos mots en ajoutant de l'humour et du dynamisme sur votre serveur !\n\n ▶️ Son code source se trouve sur GitHub, il est donc opensource ! Voici son lien : https://github.com/Nathoune-YT/le_bot. Vous pouvez l'améliorer ou simplement l'utiliser tout en suivant la procédure présente dans le README.\n\n ▶️ Voici la politique de confidentialité : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt\n\n ▶️ Le site web officiel de Le_Bot : https://le-bot.cf (il prend un peu de temps à se charger chez certaines personnes)", inline=True)
         embed3.set_footer(text="\nDébut ⏪ | Mots ◀️\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
 
         bot.help_pages = [page1, page2, page3]
@@ -81,13 +81,13 @@ def main():
         async def on_message(message):
             await bot.process_commands(message)
             
-            [await message.channel.send(o['value']) for o in list if o['name'] == message.content.lower()]
+            [await message.reply(o['value']) for o in list if o['name'] == message.content.lower()]
 
         @bot.command()
         async def h(ctx):
             buttons = [u"\u23EA", u"\u25C0", u"\u25B6", u"\u23E9"]
             current = 0
-            msg = await ctx.send(embed=bot.help_pages[current])
+            msg = await ctx.reply(embed=bot.help_pages[current])
 
             for button in buttons:
                 await msg.add_reaction(button)
@@ -138,31 +138,31 @@ def main():
             embed4.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot`", inline=False)
             embed4.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
             embed4.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
-            await ctx.channel.send(embed=embed4)
+            await ctx.reply(embed=embed4)
             embed5 = discord.Embed(title="⏏️ Nouveaux mots :", color=0xffab33, description="""`
 🟡 Feur            🟡 RAM    
 🟡 Paypal          🟡 GPU   
 🟡 Nyan Cat        🟡 CPU   
 `""")
-            await ctx.channel.send(embed=embed5)
+            await ctx.reply(embed=embed5)
         
         @bot.command()
         async def how_work(ctx):
             embed6 = discord.Embed(title="Comment utiliser la nouvelle commande 'help' !", color=0xffab33)
             embed6.set_image(url="https://i.imgur.com/m4YqCHC.gif") 
-            await ctx.channel.send(embed=embed6)
+            await ctx.reply(embed=embed6)
 
         @bot.command()
         async def github(ctx):
             embed7 = discord.Embed(title="🔗 Le_Bot est opensource et son code se trouve sur GitHub !", color=0xffab33, url="https://github.com/Nathoune-YT/le_bot")
             embed7.add_field(name="🌍 Informations", value="Le_Bot est opensource et se trouve sur GitHub (https://github.com/Nathoune-YT/le_bot). Vous pouvez simplement regarder le script, le modifier et m'envoyer une pull request pour peut-être voir vos modifications dans le code officiel de Le_Bot ou l'utiliser et le modifier tout en suivant la procédure à lire dans le README !")
-            await ctx.channel.send(embed=embed7)
+            await ctx.reply(embed=embed7)
 
         @bot.command()
         async def site(ctx):
-            embed7 = discord.Embed(title="Le site web officiel de Le_Bot", color=0xffab33, url="https://le-bot.cf")
+            embed7 = discord.Embed(title="🤌 Le site web officiel de Le_Bot", color=0xffab33, url="https://le-bot.cf")
             embed7.add_field(name="Le lien du site officiel :", value="https://le-bot.cf")
-            await ctx.channel.send(embed=embed7)
+            await ctx.reply(embed=embed7)
 
         bot.run(config["token"])
 
