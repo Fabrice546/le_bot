@@ -1,4 +1,5 @@
 import asyncio
+from inspect import Traceback
 import discord
 import json
 import time
@@ -12,8 +13,8 @@ with open('./config.json', 'r', encoding='utf-8') as cjson:
 with open('./liste.json', 'r', encoding='utf-8') as ljson:
     list = json.load(ljson)
 
-intents = discord.Intents.all()
-discord.member = True
+intents = discord.Intents.default()
+intents.members = True
 
 bot = commands.Bot(command_prefix= config["prefix"], help_command=None, news_pages=None, intents = intents)
 
@@ -112,7 +113,12 @@ def main():
         
         @bot.event
         async def on_member_join(member):
-            await member.send('Salut ! Tu as rejoins un serveur dans lequel je suis, donc attention à toi 😒. Non en vrai je rigole, je suis le bot qui te répond quand tu te prends des vents donc jsuis sympa un peu. Bref, écris un petit message pour dire bonjour dans le serveur !')
+            await member.send("https://tenor.com/view/hey-beautiful-blow-kiss-wave-smile-gif-16278801")
+            embed10 = discord.Embed(title="Salut jeune entrepeneur.", color=0xffab33)
+            embed10.add_field(name="""Tu as rejoins un serveur dans lequel je suis, donc attention à toi 😒. 
+Non en vrai je rigole, je suis le bot qui te répond quand tu te prends des vents donc jsuis sympa un peu.
+Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""Le_Bot, votre bot intéracitf (https://le-bot.cf) !""")
+            await member.send(embed=embed10)
 
         @bot.event
         async def on_message(message):
@@ -220,15 +226,15 @@ def main():
 
         @bot.command()
         async def site(ctx):
-            embed7 = discord.Embed(title="🤌 Le site web officiel de Le_Bot", color=0xffab33, url="https://le-bot.cf")
-            embed7.add_field(name="Le lien du site officiel :", value="https://le-bot.cf")
-            await ctx.reply(embed=embed7)
+            embed8 = discord.Embed(title="🤌 Le site web officiel de Le_Bot", color=0xffab33, url="https://le-bot.cf")
+            embed8.add_field(name="Le lien du site officiel :", value="https://le-bot.cf")
+            await ctx.reply(embed=embed8)
 
         @bot.command()
         async def ping(ctx):
-            embed8 = discord.Embed(title="Donc là je dois répondre 🤔 ?", color=0xffab33)
-            embed8.add_field(name=f"📶 J\'ai bien reçu ton message en : `{round(bot.latency * 1000)}ms`", value=f"(je te réponds c'est le principal ok.)")
-            await ctx.reply(embed=embed8)
+            embed9 = discord.Embed(title="Donc là je dois répondre 🤔 ?", color=0xffab33)
+            embed9.add_field(name=f"📶 J\'ai bien reçu ton message en : `{round(bot.latency * 1000)}ms`", value=f"(je te réponds c'est le principal ok.)")
+            await ctx.reply(embed=embed9)
 
         bot.run(config["token"])
 
