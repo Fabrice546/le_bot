@@ -80,7 +80,11 @@ def main():
 
 ▶️ Le site web officiel de Le_Bot : https://le-bot.cf (il prend un peu de temps à se charger chez certaines personnes)
 
-▶️ Le prefix de Le_Bot change ! Il s'agit désormais de `{}` au lieu de `!`""".format(config["prefix"]), inline=True)
+▶️ Le prefix de Le_Bot change ! Il s'agit désormais de `{}` au lieu de `!`
+
+▶️ Pour toutes questions, veuillez contacter le créateur de Le_Bot : `nathouneyoutube@hotmail.com` par mail ou `Nathoune#3630` sur Discord.""".format(config["prefix"]), inline=True)
+
+
         embed3.set_footer(text="\nDébut ⏪ | Mots ◀️\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
 
         bot.help_pages = [page1_h, page2_h, page3_h]
@@ -171,7 +175,9 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
 
         @bot.command()
         async def serveur(ctx):
-            await ctx.reply("**Voici le serveur Nathoune_Serveur Résurection** : https://discord.gg/b6jjy5yKXV")
+            embed11 = discord.Embed(title="🔥 Le serveur du créateur de **Le_Bot**.", color=0xffab33, url="https://discord.gg/b6jjy5yKXV")
+            embed11.add_field(name="Le lien du serveur de Nathoune :", value="https://discord.gg/b6jjy5yKXV")
+            await ctx.reply(embed=embed11)
 
         @bot.command()
         async def news(ctx):
