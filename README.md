@@ -28,7 +28,7 @@ Le_Bot a été certfié par Discord ! <a href="https://discord.com/oauth2/author
 
 **Voici les étapes à suivre pour lancer Le_Bot :**
 
-Avant l'installation du code, rendez vous sur le Discord Developper Portal et cocher ces intents précisement dans la catégorie "Bot".
+Avant l'installation du code, rendez vous sur le Discord Developper Portal et cocher ces intents précisement dans la catégorie "Bot". Attention, si votre bot est certifié par Discord, vous devrez faire une nouvelle demande pour le "Server Members Intent".
 
 <img src="https://i.imgur.com/saaTrwl.png" width="700">
 
