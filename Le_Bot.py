@@ -117,7 +117,6 @@ def main():
         
         @bot.event
         async def on_member_join(member):
-            await member.send("https://tenor.com/view/hey-beautiful-blow-kiss-wave-smile-gif-16278801")
             embed10 = discord.Embed(title="Salut jeune entrepeneur.", color=0xffab33)
             embed10.add_field(name="""Tu as rejoins un serveur dans lequel je suis, donc attention à toi 😒. 
 Non en vrai je rigole, je suis le bot qui te répond quand tu te prends des vents donc jsuis sympa un peu.
@@ -129,6 +128,9 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             await bot.process_commands(message)
             
             [await message.reply(o['value']) for o in list if o['name'] == message.content.lower()]
+
+            if bot.user.mentioned_in(message):
+                await message.channel.send("Salut :wave:.\nJe suis **Le_Bot**, fais `{}h` pour en savoir plus sur moi et mes commandes !".format(config["prefix"]))
 
         @bot.command()
         async def h(ctx):
