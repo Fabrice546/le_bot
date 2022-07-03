@@ -26,7 +26,9 @@ Le_Bot a été certfié par Discord ! <a href="https://discord.com/oauth2/author
 
 # Installation
 
-**Voici les étapes à suivre pour lancer Le_Bot :** 
+**Voici les étapes à suivre pour lancer Le_Bot :**
+
+Avant l'installation du code, rendez vous sur le Discord Developper Portal et cocher ces intents précisement dans la catégorie "Bot".<img src="https://i.imgur.com/saaTrwl.png" width="700">
 
 Premièrement, téléchargez l'archive contenant tous les fichiers nécéssaires au bon fonctionnement du bot. Ensuite installer Python en cochant la case `ADD Python [version] TO PATH`.  
 Ouvrez un CMD à l'emplcament de vos fichiers. Éxecutez cette commande `pip install -r requirements.txt`.  
