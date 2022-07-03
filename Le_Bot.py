@@ -130,7 +130,7 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             [await message.reply(o['value']) for o in list if o['name'] == message.content.lower()]
 
             if bot.user.mentioned_in(message):
-                await message.channel.send("Salut :wave:.\nJe suis **Le_Bot**, fais `{}h` pour en savoir plus sur moi et mes commandes !".format(config["prefix"]))
+                await message.reply("Salut :wave:.\nJe suis **Le_Bot**, fais `{}h` pour en savoir plus sur moi et mes commandes !".format(config["prefix"]))
 
         @bot.command()
         async def h(ctx):
