@@ -36,8 +36,12 @@ Premièrement, téléchargez l'archive contenant tous les fichiers nécéssaires
 Ouvrez un CMD à l'emplcament de vos fichiers. Éxecutez cette commande `pip install -r requirements.txt`.  
 Renseignez le token de votre bot dans le fichier `config.json`.  
 Renseignez le prefix de votre bot dans le fichier `config.json`.  
-Vous pouvez ajouter ou supprimer les mots auxquels Le_Bot réagit dans le fichier `liste.json`. `name` correspond aux mots auxquels Le_Bot réagit, vous n'avez pas besoin de mettre toutes les déclinaisons du mot (exemple : Salut ; sAlut ; saLut...), le script prend en compte ce paramètre. `value` correpond à la réponse de Le_Bot.  
+Vous pouvez ajouter ou supprimer les mots auxquels Le_Bot réagit dans le fichier `liste.json`. `name` correspond aux mots auxquels Le_Bot réagit, vous n'avez pas besoin de mettre toutes les déclinaisons du mot (exemple : Salut ; sAlut ; saLut...), le script prend en compte ce paramètre. `value` correpond à la réponse de Le_Bot. 
+
+Vous trouverez dans le dossier `toggle` des fichiers textes au nom de chaques commandes proposées par Le_Bot. Dans ces fichiers textes seront stockés les IDs des serveurs qui auront désactivés une de ses commandes. Le_Bot vérifira à chaque utilisation d'une commande si l'ID du seveur sur lequel la commande a été demandée est présente dans un de ces fichiers texte et adaptera sa réponse pour activer ou non la commande. 
+
 Lancer `Le_Bot.py` et votre bot sera en ligne !  
+
 Amusez-vous bien !
 
 # License
