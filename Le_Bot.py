@@ -9,6 +9,7 @@ import time
 import sys
 from discord import Embed
 from discord.ext import commands
+from numpy import tile
 
 #Ouverture et configuration des 2 fichiers json pour les mots auxquels Le_Bot réagit, le préfix et le token
 with open('./config.json', 'r', encoding='utf-8') as cjson:
@@ -52,20 +53,20 @@ def main():
 
         #Définition des pages de la commande "help" car elle est dynamique
         #Page 1 :
-        page1_h = embed1 = discord.Embed(title="⚙️ Commandes :\n", color=0xffab33)
-        embed1.add_field(name="📃 {}h".format(config["prefix"]), value="`Envoyer ce message.`")
-        embed1.add_field(name="📑 {}news".format(config["prefix"]), value="`Afficher les nouveautés.`", inline=False)
-        embed1.add_field(name="📞 {}serveur".format(config["prefix"]), value="`Pour pouvoir rejoindre le serveur Discord.`", inline=False)
-        embed1.add_field(name="🗒️ {}confidentiality".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
-        embed1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot`", inline=False)
-        embed1.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
-        embed1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
-        embed1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=False)
-        embed1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes`", inline=False)
-        embed1.set_footer(text="\n ▶️ Mots | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
+        page1_h = embed_help_page_1 = discord.Embed(title="⚙️ Commandes :\n", color=0xffab33)
+        embed_help_page_1.add_field(name="📃 {}h".format(config["prefix"]), value="`Envoyer ce message.`")
+        embed_help_page_1.add_field(name="📑 {}news".format(config["prefix"]), value="`Afficher les nouveautés.`", inline=False)
+        embed_help_page_1.add_field(name="📞 {}serveur".format(config["prefix"]), value="`Pour pouvoir rejoindre le serveur Discord.`", inline=False)
+        embed_help_page_1.add_field(name="🗒️ {}confidentiality".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
+        embed_help_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot`", inline=False)
+        embed_help_page_1.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
+        embed_help_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
+        embed_help_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=False)
+        embed_help_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes`", inline=False)
+        embed_help_page_1.set_footer(text="\n ▶️ Mots | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
 
         #Page 2 :
-        page2_h = embed2 = discord.Embed(title="📋 Mots :", color=0xffab33,
+        page2_h = embed_help_page_2 = discord.Embed(title="📋 Mots :", color=0xffab33,
         description="""`
 🟡 Salut              🟡 Le bot est éclaté    🟡 Lol
 🟡 Yo                 🟡 Le bot est nul       🟡 YouTube
@@ -84,11 +85,11 @@ def main():
 🟡 Le bot             🟡 Je sais pas          🟡 Coucou
 🟡 GPU                🟡 CPU                  🟡 RAM
 `""", inline=False)
-        embed2.set_footer(text="\nDébut ⏪ | Commandes ◀️ | ▶️ Informations | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.gq ou clique sur le bouton bleu sur mon profil🚨")
+        embed_help_page_2.set_footer(text="\nDébut ⏪ | Commandes ◀️ | ▶️ Informations | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
 
         #Page 3 :
-        page3_h = embed3 = Embed(title="📂 Informations :", color=0xffab33)
-        embed3.add_field(name="Le_Bot, votre bot interactif !", value="""▶️ Le_Bot répondra à certains de vos mots en ajoutant de l'humour et du dynamisme sur votre serveur !
+        page3_h = embed_help_page_5 = Embed(title="📂 Informations :", color=0xffab33)
+        embed_help_page_5.add_field(name="Le_Bot, votre bot interactif !", value="""▶️ Le_Bot répondra à certains de vos mots en ajoutant de l'humour et du dynamisme sur votre serveur !
 
 ▶️ Son code source se trouve sur GitHub, il est donc opensource ! Voici son lien : https://github.com/Nathoune-YT/le_bot. Vous pouvez l'améliorer ou simplement l'utiliser tout en suivant la procédure présente dans le README.
 
@@ -99,32 +100,32 @@ def main():
 ▶️ Le prefix de Le_Bot change ! Il s'agit désormais de `{}` au lieu de `!`
 
 ▶️ Pour toutes questions, veuillez contacter le créateur de Le_Bot : `nathouneyoutube@hotmail.com` par mail ou `Nathoune#3630` sur Discord.""".format(config["prefix"]), inline=True)
-        embed3.set_footer(text="\nDébut ⏪ | Mots ◀️\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
+        embed_help_page_5.set_footer(text="\nDébut ⏪ | Mots ◀️\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
 
         #Mise en place des pages pour la commande "help"
         bot.help_pages = [page1_h, page2_h, page3_h]
 
         #Définition des pages de la commande "news" car elle est dynamique
         #Page 1 :
-        page1_news = embed4 = discord.Embed(title="📈 Nouvelles commandes :", color=0xffab33)
-        embed4.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot`", inline=False)
-        embed4.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
-        embed4.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
-        embed4.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=False)
-        embed4.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes`", inline=False)
-        embed4.set_footer(text="\n ▶️ Nouveaux mots | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
+        page1_news = embed_news_page_1 = discord.Embed(title="📈 Nouvelles commandes :", color=0xffab33)
+        embed_news_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot`", inline=False)
+        embed_news_page_1.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
+        embed_news_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
+        embed_news_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=False)
+        embed_news_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes`", inline=False)
+        embed_news_page_1.set_footer(text="\n ▶️ Nouveaux mots | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
 
         #Page 2 :
-        page2_news = embed4 = discord.Embed(title="⏏️ Nouveaux mots :", color=0xffab33, description="""`
+        page2_news = embed_news_page_2 = discord.Embed(title="⏏️ Nouveaux mots :", color=0xffab33, description="""`
 🟡 Feur            🟡 RAM    
 🟡 Paypal          🟡 GPU   
 🟡 Nyan Cat        🟡 CPU   
 `""")
-        embed4.set_footer(text="\n Début ⏪ | Nouvelles commandes ◀️ | ▶️ Nouveau préfix | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
+        embed_news_page_2.set_footer(text="\n Début ⏪ | Nouvelles commandes ◀️ | ▶️ Nouveau préfix | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
 
         #Page 3 :
-        page3_news = embed4 = discord.Embed(title="🤟 Nouveau préfix !", color=0xffab33, description="Le_Bot possède un nouveau préfix, il s'agit désormais de `{}` au lieu de `!`.".format(config["prefix"]))
-        embed4.set_footer(text="\nDébut ⏪ | Nouveaux mots ◀️\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
+        page3_news = embed_news_page_3 = discord.Embed(title="🤟 Nouveau préfix !", color=0xffab33, description="Le_Bot possède un nouveau préfix, il s'agit désormais de `{}` au lieu de `!`.".format(config["prefix"]))
+        embed_news_page_3.set_footer(text="\nDébut ⏪ | Nouveaux mots ◀️\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
 
         #Mise en place des pages pour la commande "news"
         bot.news_pages = [page1_news, page2_news, page3_news]
@@ -141,11 +142,11 @@ def main():
         @bot.event
         #Message privé lorsqu'un membre rejoint un serveur sur lequel il y a Le_Bot
         async def on_member_join(member):
-            embed10 = discord.Embed(title="Salut jeune entrepeneur.", color=0xffab33)
-            embed10.add_field(name="""Tu as rejoins un serveur dans lequel je suis, donc attention à toi 😒. 
+            embed_new_member = discord.Embed(title="Salut jeune entrepeneur.", color=0xffab33)
+            embed_new_member.add_field(name="""Tu as rejoins un serveur dans lequel je suis, donc attention à toi 😒. 
 Non en vrai je rigole, je suis le bot qui te répond quand tu te prends des vents donc jsuis sympa un peu.
 Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""Le_Bot, votre bot intéracitf (https://le-bot.cf) !""")
-            await member.send(embed=embed10)
+            await member.send(embed=embed_new_member)
 
         @bot.event
         async def on_message(message):
@@ -157,7 +158,8 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
 
             #Réponse du bot quand quelqu'un le mentionne
             if bot.user.mentioned_in(message):
-                await message.reply("Salut :wave:.\nJe suis **Le_Bot**, fais `{}h` pour en savoir plus sur moi et mes commandes !".format(config["prefix"]))
+                embed_mention = discord.Embed(title="Salut :wave:.\nJe suis **Le_Bot**, fais `{}h` pour en savoir plus sur moi et mes commandes !".format(config["prefix"]), color=0xffab33)
+                await message.reply(embed=embed_mention)
 
         @bot.command()
         #Définition de la commande "help" dynamique
@@ -218,10 +220,11 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
 
                         if current != previous_page:
                             await msg.edit(embed=bot.help_pages[current])
-                            return
 
             #Réponse du bot si la commande est désactivée
-            await ctx.reply("🚫 La commande est désactivée.\nFais `{}toggle h` pour la réactiver.".format(config["prefix"]))
+            else :
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle h` pour la réactiver.".format(config["prefix"]), color=0xffab33)
+                await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
         #Définition de la commande "confidentiality"
@@ -237,13 +240,14 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
                 #Début de la commande "confidentiality"
-                embed12 = discord.Embed(title="🧑‍⚖ La politique de confidentialité de Le_Bot", color=0xffab33, url="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
-                embed12.add_field(name="Le lien vers la politique de confidentialité :", value="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
-                await ctx.reply(embed=embed12)
-                return
+                embed_confidentiality = discord.Embed(title="🧑‍⚖ La politique de confidentialité de Le_Bot", color=0xffab33, url="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
+                embed_confidentiality.add_field(name="Le lien vers la politique de confidentialité :", value="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
+                await ctx.reply(embed=embed_confidentiality)
 
             #Sinon réponse du bot si la commande est désactivée
-            await ctx.reply("🚫 La commande est désactivée.\nFais `{}toggle confidentiality` pour la réactiver.".format(config["prefix"]))
+            else :
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle confidentiality` pour la réactiver.".format(config["prefix"]), color=0xff0000)
+                await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
         #Définition de la commande "serveur"
@@ -259,13 +263,14 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
                 #Début de la commande "serveur"
-                embed11 = discord.Embed(title="🔥 Le serveur du créateur de **Le_Bot**.", color=0xffab33, url="https://discord.gg/b6jjy5yKXV")
-                embed11.add_field(name="Le lien du serveur de Nathoune :", value="https://discord.gg/b6jjy5yKXV")
-                await ctx.reply(embed=embed11)
-                return
+                embed_serveur = discord.Embed(title="🔥 Le serveur du créateur de **Le_Bot**.", color=0xffab33, url="https://discord.gg/b6jjy5yKXV")
+                embed_serveur.add_field(name="Le lien du serveur de Nathoune :", value="https://discord.gg/b6jjy5yKXV")
+                await ctx.reply(embed=embed_serveur)
 
             #Sinon réponse du bot si la commande est désactivée
-            await ctx.reply("🚫 La commande est désactivée.\nFais `{}toggle serveur` pour la réactiver.".format(config["prefix"]))
+            else :
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle serveur` pour la réactiver.".format(config["prefix"]), color=0xff0000)
+                await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
         #Définition de la commande "news"
@@ -326,10 +331,11 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
 
                         if current != previous_page:
                             await msg.edit(embed=bot.news_pages[current])
-                            return
 
             #Sinon réponse du bot si la commande est désactivée
-            await ctx.reply("🚫 La commande est désactivée.\nFais `{}toggle news` pour la réactiver.".format(config["prefix"]))
+            else :
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle news` pour la réactiver.".format(config["prefix"]), color=0xff0000)
+                await ctx.reply(embed=embed_disabled_command)
         
         @bot.command()
         #Définition de la commande "how_work"
@@ -345,13 +351,14 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
                 #Début de la commande "how_work"
-                embed6 = discord.Embed(title="Comment utiliser la nouvelle commande 'help' !", color=0xffab33)
-                embed6.set_image(url="https://i.imgur.com/m4YqCHC.gif") 
-                await ctx.reply(embed=embed6)
-                return
+                embed_how_work = discord.Embed(title="Comment utiliser la nouvelle commande 'help' !", color=0xffab33)
+                embed_how_work.set_image(url="https://i.imgur.com/m4YqCHC.gif") 
+                await ctx.reply(embed=embed_how_work)
 
             #Sinon réponse du bot si la commande est désactivée
-            await ctx.reply("🚫 La commande est désactivée.\nFais `{}toggle how_work` pour la réactiver.".format(config["prefix"]))
+            else :
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle how_work` pour la réactiver.".format(config["prefix"]), color=0xff0000)
+                await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
         #Définition de la commande "gihtub"
@@ -367,13 +374,14 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
                 #Début de la commande "github"
-                embed7 = discord.Embed(title="🔗 Le_Bot est opensource et son code se trouve sur GitHub !", color=0xffab33, url="https://github.com/Nathoune-YT/le_bot")
-                embed7.add_field(name="🌍 Informations", value="Le_Bot est opensource et se trouve sur GitHub (https://github.com/Nathoune-YT/le_bot). Vous pouvez simplement regarder le script, le modifier et m'envoyer une pull request pour peut-être voir vos modifications dans le code officiel de Le_Bot ou l'utiliser et le modifier tout en suivant la procédure à lire dans le README !")
-                await ctx.reply(embed=embed7)
-                return
+                embed_github = discord.Embed(title="🔗 Le_Bot est opensource et son code se trouve sur GitHub !", color=0xffab33, url="https://github.com/Nathoune-YT/le_bot")
+                embed_github.add_field(name="🌍 Informations", value="Le_Bot est opensource et se trouve sur GitHub (https://github.com/Nathoune-YT/le_bot). Vous pouvez simplement regarder le script, le modifier et m'envoyer une pull request pour peut-être voir vos modifications dans le code officiel de Le_Bot ou l'utiliser et le modifier tout en suivant la procédure à lire dans le README !")
+                await ctx.reply(embed=embed_github)
             
             #Sinon réponse du bot si la commande est désactivée
-            await ctx.reply("🚫 La commande est désactivée.\nFais `{}toggle github` pour la réactiver.".format(config["prefix"]))
+            else :
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle github` pour la réactiver.".format(config["prefix"]), color=0xff0000)
+                await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
         #Définition de la commande "site"
@@ -389,13 +397,14 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
                 #Début de la commande "site"
-                embed8 = discord.Embed(title="🤌 Le site web officiel de Le_Bot", color=0xffab33, url="https://le-bot.cf")
-                embed8.add_field(name="Le lien du site officiel :", value="https://le-bot.cf")
-                await ctx.reply(embed=embed8)
-                return
+                embed_site = discord.Embed(title="🤌 Le site web officiel de Le_Bot", color=0xffab33, url="https://le-bot.cf")
+                embed_site.add_field(name="Le lien du site officiel :", value="https://le-bot.cf")
+                await ctx.reply(embed=embed_site)
 
             #Sinon réponse du bot si la commande est désactivée
-            await ctx.reply("🚫 La commande est désactivée.\nFais `{}toggle site` pour la réactiver.".format(config["prefix"]))
+            else :
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle site` pour la réactiver.".format(config["prefix"]), color=0xff0000)
+                await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
         #Définition de la commande "ping"
@@ -411,20 +420,23 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
                 #Début de la commande "ping"
-                embed9 = discord.Embed(title="Donc là je dois répondre 🤔 ?", color=0xffab33)
-                embed9.add_field(name=f"📶 J\'ai bien reçu ton message en : `{round(bot.latency * 1000)}ms`", value=f"(je te réponds c'est le principal ok.)")
-                await ctx.reply(embed=embed9)
-                return
+                embed_ping = discord.Embed(title="Donc là je dois répondre 🤔 ?", color=0xffab33)
+                embed_ping.add_field(name=f"📶 J\'ai bien reçu ton message en : `{round(bot.latency * 1000)}ms`", value=f"(je te réponds c'est le principal ok.)")
+                await ctx.reply(embed=embed_ping)
 
             #Sinon réponse du bot si la commande est désactivée
-            await ctx.reply("🚫 La commande est désactivée.\nFais `{}toggle ping` pour la réactiver.".format(config["prefix"]))
+            else :
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle ping` pour la réactiver.".format(config["prefix"]), color=0xff0000)
+                await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
         #Définition de la commande "toggle"
         async def toggle(ctx, command_name=None):
             #Réponse du bot si aucune commande n'est saisie après "toggle"
             if command_name == None: 
-                await ctx.reply("Donne moi le nom de la commande à désactiver/activer stp comme ceci :\n`{}toggle commande`".format(config["prefix"]))
+                embed_no_toggle = discord.Embed(title="Donne moi le nom de la commande à désactiver/activer comme ceci :", color=0xffab33)
+                embed_no_toggle.add_field(name="`{}toggle commande`".format(config["prefix"]), value="Pour retrouvez l'ensemble des commandes, fais celle ci `{}h`.".format(config["prefix"]))
+                await ctx.reply(embed=embed_no_toggle)
                 return
 
             #Si il y en a une il essaye :
@@ -446,7 +458,8 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                         with open(f"./toggle/{command_name}_toggle.txt", "a") as file:
                             file.write(str(f"{now_id}\n"))
                         #Réponse du bot lors de la désactivation
-                        await ctx.reply(f"❌ J'ai désactivé la commande `{command_name}`.")
+                        embed_toggle_disabled = discord.Embed(title=f"❌ J'ai désactivé la commande `{command_name}`.", description="Pour la réactiver, fais `{}toggle {}`".format(config["prefix"], command_name), color=0xff0000)
+                        await ctx.reply(embed=embed_toggle_disabled)
                         return
 
                     #Si l'ID actuelle du serveur est dans la liste, il l'a supprime et donc active la commande
@@ -465,11 +478,13 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                             file.write(line)
                         file.close()
                         #Réponse du bot lors de l'activation
-                        await ctx.reply(f"✅ J'ai activé la commande `{command_name}`.")
+                        embed_toggle_enabled = discord.Embed(title=f"✅ J'ai activé la commande `{command_name}`.", description="Pour la désactiver, fais `{}toggle {}`".format(config["prefix"], command_name),color=0x00d731)
+                        await ctx.reply(embed=embed_toggle_enabled)
 
             #Si la commande n'existe pas :
             except:
-                await ctx.reply("C'est pas une commande valide t'es dyslexique ou quoi ?")
+                embed_wrong_toggle = discord.Embed(title=f"C'est pas une commande valide, t'es dyslexique ou quoi ?", description="Pour la activer ou désactiver des commandes, fais `{}toggle commande`. Tu retrouves l'ensembles des commandes en faisant celle ci `{}h`.".format(config["prefix"], config["prefix"]),color=0xffab33)
+                await ctx.reply(embed=embed_wrong_toggle)
                 return
 
         #Démarrage du bot avec le token fournit dans le fichier "config.json"
