@@ -9,7 +9,6 @@ import time
 import sys
 from discord import Embed
 from discord.ext import commands
-from numpy import tile
 
 #Ouverture et configuration des 2 fichiers json pour les mots auxquels Le_Bot réagit, le préfix et le token
 with open('./config.json', 'r', encoding='utf-8') as cjson:
