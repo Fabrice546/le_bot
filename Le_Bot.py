@@ -9,6 +9,7 @@ import time
 import sys
 from discord import Embed
 from discord.ext import commands
+import os
 
 #Ouverture et configuration des 2 fichiers json pour les mots auxquels Le_Bot réagit, le préfix et le token
 with open('./config.json', 'r', encoding='utf-8') as cjson:
@@ -57,11 +58,12 @@ def main():
         embed_help_page_1.add_field(name="📑 {}news".format(config["prefix"]), value="`Afficher les nouveautés.`", inline=False)
         embed_help_page_1.add_field(name="📞 {}serveur".format(config["prefix"]), value="`Pour pouvoir rejoindre le serveur Discord.`", inline=False)
         embed_help_page_1.add_field(name="🗒️ {}confidentiality".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
-        embed_help_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot`", inline=False)
+        embed_help_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot.`", inline=False)
         embed_help_page_1.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
         embed_help_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
         embed_help_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=False)
-        embed_help_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes`", inline=False)
+        embed_help_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. Attention cette commande requiert les persmissions administrateur !`", inline=False)
+        embed_help_page_1.add_field(name="🚮 {}delete invits".format(config["prefix"]), value="`Permet de désactiver ou activer la suppression automatique des liens d'invitation Discord. Attention cette commande requiert les persmissions administrateur !`", inline=False)
         embed_help_page_1.set_footer(text="\n ▶️ Mots | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
 
         #Page 2 :
@@ -107,11 +109,12 @@ def main():
         #Définition des pages de la commande "news" car elle est dynamique
         #Page 1 :
         page1_news = embed_news_page_1 = discord.Embed(title="📈 Nouvelles commandes :", color=0xffab33)
-        embed_news_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot`", inline=False)
+        embed_news_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot.`", inline=False)
         embed_news_page_1.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
         embed_news_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
-        embed_news_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=False)
-        embed_news_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes`", inline=False)
+        embed_news_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message. `", inline=False)
+        embed_news_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. Attention cette commande requiert les persmissions administrateur !`", inline=False)
+        embed_news_page_1.add_field(name="🚮 {}delete invits".format(config["prefix"]), value="`Permet de désactiver ou activer la suppression automatique des liens d'invitation Discord. Attention cette commande requiert les persmissions administrateur !`", inline=False)
         embed_news_page_1.set_footer(text="\n ▶️ Nouveaux mots | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
 
         #Page 2 :
@@ -428,6 +431,8 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                 embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle ping` pour la réactiver.".format(config["prefix"]), color=0xff0000)
                 await ctx.reply(embed=embed_disabled_command)
 
+        #Permission administrateur pour éxécuter cette commande
+        @commands.has_permissions(administrator=True)
         @bot.command()
         #Définition de la commande "toggle"
         async def toggle(ctx, command_name=None):
@@ -485,6 +490,26 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                 embed_wrong_toggle = discord.Embed(title=f"C'est pas une commande valide, t'es dyslexique ou quoi ?", description="Pour activer ou désactiver des commandes, fais `{}toggle commande`. Tu retrouves l'ensembles des commandes en faisant celle ci `{}h`.".format(config["prefix"], config["prefix"]),color=0xffab33)
                 await ctx.reply(embed=embed_wrong_toggle)
                 return
+
+        #Permission administrateur pour éxécuter cette commande
+        @commands.has_permissions(administrator=True)
+        @bot.command()
+        #Définition de la commande "delete invits"
+        async def delete(ctx, extension):
+            try:
+                #Il essaye d'activer l'extension
+                bot.load_extension(f'cogs.{extension}')
+                embed_toggle_enabled = discord.Embed(title="✅ A partir de maintenant, je supprimerai les invitations vers d'autre serveurs Discord.", description="Fais `{}delete invits` pour désactiver la suppression automatique des liens d'invitations Discord.".format(config["prefix"]),color=0x00d731)
+                await ctx.reply(embed=embed_toggle_enabled)
+            except:
+                #Si elle est déjà activée, il la désactive
+                bot.unload_extension(f'cogs.{extension}')
+                embed_disabled_command = discord.Embed(title="❌ A partir de maintenant, je ne supprimerai plus les invitations vers d'autre serveurs Discord.", description="Fais `{}delete invits` pour réactiver la suppression automatique des liens d'invitations Discord.".format(config["prefix"]), color=0xff0000)
+                await ctx.reply(embed=embed_disabled_command)
+
+        for filename in os.listdir('./cogs'):
+            if filename.endswith('.py'):
+                bot.load_extension(f'cogs.{filename[:-3]}')
 
         #Démarrage du bot avec le token fournit dans le fichier "config.json"
         bot.run(config["token"])
