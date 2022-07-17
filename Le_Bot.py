@@ -2,14 +2,12 @@
 
 #Importation des librairies nécéssaires
 import asyncio
-from inspect import Traceback
 import discord
 import json
-import time
-import sys
 from discord import Embed
 from discord.ext import commands
 import os
+from discord_components import *
 
 #Ouverture et configuration des 2 fichiers json pour les mots auxquels Le_Bot réagit, le préfix et le token
 with open('./config.json', 'r', encoding='utf-8') as cjson:
@@ -24,6 +22,9 @@ intents.members = True
 
 #Mise en place du bot en précisant le préfix, les pages pour la commande "help" et "news" et les intents (les trois sont définis au dessus)
 bot = commands.Bot(command_prefix= config["prefix"], help_command=None, news_pages=None, intents = intents)
+
+#Définition pour les boutons
+DiscordComponents(bot)
 
 #Définition de la fonction main
 def main():
@@ -43,13 +44,7 @@ def main():
         """)
         
         #Message pour prévenir que Le_Bot va bientôt être en ligne
-        message = "Mise en ligne, veuiller patientez un instant.\n\nMise en ligne . . . ."
-
-        #Affichage du message
-        for char in message:
-            sys.stdout.write(char)
-            sys.stdout.flush()
-            time.sleep(0.03)
+        print("Mise en ligne, veuiller patientez un instant.\n\nMise en ligne . . . .")
 
         #Définition des pages de la commande "help" car elle est dynamique
         #Page 1 :
@@ -177,55 +172,91 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
                 #Début de la commande help
-                #Déifnition des émojis des bouttons
-                buttons = [u"\u23EA", u"\u25C0", u"\u25B6", u"\u23E9"]
-                #Actuellement 0 cochés
+                #Actuellement à la page 1
                 current = 0
-                #Récupération des pages définies plus haut
-                msg = await ctx.reply(embed=bot.help_pages[current])
-
-                #Ajout des réactions au message
-                for button in buttons:
-                    await msg.add_reaction(button)
-
-                #Si il le fait
+                msg = await ctx.reply(
+                    embed=bot.help_pages[current],
+                    #Définition des émojis des bouttons
+                    components=[[Button(style=ButtonStyle.grey, label="⏪"), Button(style=ButtonStyle.grey, label="◀️"), Button(style=ButtonStyle.grey, label="▶️"), Button(style=ButtonStyle.grey, label="⏩")]])
+                
                 while True:
-                    #Il essaye
-                    try:
-                        #De récupérer la réaction
-                        reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user : user == ctx.author and reaction.emoji in buttons, timeout=60.0)
+                    previous_page = current
+                    interaction = await bot.wait_for("button_click")
+                    if interaction.component.label == '⏪': 
+                        current = 0
 
-                    #Si le temps de 60 secondes est dépassé il enlève ses réactions
-                    except asyncio.TimeoutError:
-                        await msg.clear_reactions()
+                    if interaction.component.label == '◀️':
+                        if current > 0:
+                            current -= 1
 
-                    #Il change ensuite de page en fonction de la réaction ajoutée
-                    else:
-                        previous_page = current
+                    if interaction.component.label == '▶️':
+                        if current < len(bot.help_pages) - 1:
+                            current += 1
 
-                        if reaction.emoji == u"\u23EA":
-                            current = 0
+                    if interaction.component.label == '⏩':
+                        current = len(bot.help_pages) - 1
 
-                        elif reaction.emoji == u"\u25C0":
-                            if current > 0 :
-                                current -= 1
+                    if current != previous_page:
+                        #Modification du message
+                        await msg.edit(embed=bot.help_pages[current])
 
-                        elif reaction.emoji == u"\u25B6":
-                            if current < len(bot.help_pages)-1:
-                                current += 1
-
-                        elif reaction.emoji == u"\u23E9":
-                            current = len(bot.help_pages)-1
-                        
-                        for button in buttons:
-                            await msg.remove_reaction(button, ctx.author)
-
-                        if current != previous_page:
-                            await msg.edit(embed=bot.help_pages[current])
+                    #Envoie du message pour savoir le nombre de pages
+                    embed_current_page = discord.Embed(title = f"Tu es a la page : {current+1}/3", description="Ce message va s'auto-supprimer.", color = 0xffab33)
+                    await interaction.send(embed=embed_current_page, ephemeral=False, delete_after=2)
 
             #Réponse du bot si la commande est désactivée
             else :
-                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle h` pour la réactiver.".format(config["prefix"]), color=0xffab33)
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle ping` pour la réactiver.".format(config["prefix"]), color=0xff0000)
+                await ctx.reply(embed=embed_disabled_command)
+
+        @bot.command()
+        #Définition de la commande "news"
+        async def news(ctx):
+            #Savoir si la commande est activée ou désactivée
+            with open('./toggle/news_toggle.txt', 'r') as file:
+                #Lecture du fichier avec les IDs des serveurs où la commande est désactivée
+                disabled_command = file.read().splitlines()
+
+            #Récupération de l'ID du serveur actuelle
+            now_id = str(ctx.message.guild.id)
+
+            #Si l'ID du serveur actuel n'est pas dans le fichier
+            if now_id not in disabled_command:
+                #Début de la commande help
+                #Actuellement à la page 1
+                current = 0
+                msg = await ctx.reply(
+                    embed=bot.news_pages[current],
+                    #Définition des émojis des bouttons
+                    components=[[Button(style=ButtonStyle.grey, label="⏪"), Button(style=ButtonStyle.grey, label="◀️"), Button(style=ButtonStyle.grey, label="▶️"), Button(style=ButtonStyle.grey, label="⏩")]])
+                
+                while True:
+                    previous_page = current
+                    interaction = await bot.wait_for("button_click")
+                    if interaction.component.label == '⏪': 
+                        current = 0
+
+                    if interaction.component.label == '◀️':
+                        if current > 0:
+                            current -= 1
+
+                    if interaction.component.label == '▶️':
+                        if current < len(bot.news_pages) - 1:
+                            current += 1
+
+                    if interaction.component.label == '⏩':
+                        current = len(bot.news_pages) - 1
+
+                    if current != previous_page:
+                        #Modification du message
+                        await msg.edit(embed=bot.news_pages[current])
+
+                    #Envoie du message pour savoir le nombre de pages
+                    embed_current_page = discord.Embed(title = f"Tu es a la page : {current+1}/3", description="Ce message va s'auto-supprimer.", color = 0xffab33)
+                    await interaction.send(embed=embed_current_page, ephemeral=False, delete_after=2)
+            #Sinon réponse du bot si la commande est désactivée
+            else :
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle news` pour la réactiver.".format(config["prefix"]), color=0xff0000)
                 await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
@@ -267,76 +298,12 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                 #Début de la commande "serveur"
                 embed_serveur = discord.Embed(title="🔥 Le serveur du créateur de **Le_Bot**.", color=0xffab33, url="https://discord.gg/b6jjy5yKXV")
                 embed_serveur.add_field(name="Le lien du serveur de Nathoune :", value="https://discord.gg/b6jjy5yKXV")
-                await ctx.reply(embed=embed_serveur)
+                await ctx.reply(embed=embed_serveur, components = [
+                Button(label = "📞 Lien", style=5, url="https://discord.gg/b6jjy5yKXV")])
 
             #Sinon réponse du bot si la commande est désactivée
             else :
                 embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle serveur` pour la réactiver.".format(config["prefix"]), color=0xff0000)
-                await ctx.reply(embed=embed_disabled_command)
-
-        @bot.command()
-        #Définition de la commande "news"
-        async def news(ctx):
-            #Savoir si la commande est activée ou désactivée
-            with open('./toggle/news_toggle.txt', 'r') as file:
-                #Lecture du fichier avec les IDs des serveurs où la commande est désactivée
-                disabled_command = file.read().splitlines()
-
-            #Récupération de l'ID du serveur actuelle
-            now_id = str(ctx.message.guild.id)
-
-            #Si l'ID du serveur actuel n'est pas dans le fichier
-            if now_id not in disabled_command:
-                #Début de la commande "news"
-                #Déifnition des émojis des bouttons
-                buttons = [u"\u23EA", u"\u25C0", u"\u25B6", u"\u23E9"]
-                #Actuellement 0 cochés
-                current = 0
-                #Récupération des pages définies plus haut
-                msg = await ctx.reply(embed=bot.news_pages[current])
-
-                #Ajout des réactions au message
-                for button in buttons:
-                    await msg.add_reaction(button)
-
-                #Si il le fait
-                while True:
-                    #Il essaye
-                    try:
-                        #De récupérer la réaction
-                        reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user : user == ctx.author and reaction.emoji in buttons, timeout=60.0)
-
-                    #Si le temps de 60 secondes est dépassé il enlève ses réactions
-                    except asyncio.TimeoutError:
-                        await msg.clear_reactions()
-
-                    #Il change ensuite de page en fonction de la réaction ajoutée
-                    else:
-                        previous_page = current
-
-                        if reaction.emoji == u"\u23EA":
-                            current = 0
-
-                        elif reaction.emoji == u"\u25C0":
-                            if current > 0 :
-                                current -= 1
-
-                        elif reaction.emoji == u"\u25B6":
-                            if current < len(bot.news_pages)-1:
-                                current += 1
-
-                        elif reaction.emoji == u"\u23E9":
-                            current = len(bot.news_pages)-1
-                        
-                        for button in buttons:
-                            await msg.remove_reaction(button, ctx.author)
-
-                        if current != previous_page:
-                            await msg.edit(embed=bot.news_pages[current])
-
-            #Sinon réponse du bot si la commande est désactivée
-            else :
-                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle news` pour la réactiver.".format(config["prefix"]), color=0xff0000)
                 await ctx.reply(embed=embed_disabled_command)
         
         @bot.command()
@@ -355,7 +322,8 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                 #Début de la commande "how_work"
                 embed_how_work = discord.Embed(title="Comment utiliser la nouvelle commande 'help' !", color=0xffab33)
                 embed_how_work.set_image(url="https://i.imgur.com/m4YqCHC.gif") 
-                await ctx.reply(embed=embed_how_work)
+                await ctx.reply(embed=embed_how_work, components = [
+                Button(label = "❓ Lien", style=5, url="https://i.imgur.com/m4YqCHC.gif")])
 
             #Sinon réponse du bot si la commande est désactivée
             else :
@@ -378,7 +346,8 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                 #Début de la commande "github"
                 embed_github = discord.Embed(title="🔗 Le_Bot est opensource et son code se trouve sur GitHub !", color=0xffab33, url="https://github.com/Nathoune-YT/le_bot")
                 embed_github.add_field(name="🌍 Informations", value="Le_Bot est opensource et se trouve sur GitHub (https://github.com/Nathoune-YT/le_bot). Vous pouvez simplement regarder le script, le modifier et m'envoyer une pull request pour peut-être voir vos modifications dans le code officiel de Le_Bot ou l'utiliser et le modifier tout en suivant la procédure à lire dans le README !")
-                await ctx.reply(embed=embed_github)
+                await ctx.reply(embed=embed_github, components = [
+                Button(label = "🔗 Lien", style=5, url="https://github.com/Nathoune-YT/le_bot")])
             
             #Sinon réponse du bot si la commande est désactivée
             else :
@@ -401,7 +370,8 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                 #Début de la commande "site"
                 embed_site = discord.Embed(title="🤌 Le site web officiel de Le_Bot", color=0xffab33, url="https://le-bot.cf")
                 embed_site.add_field(name="Le lien du site officiel :", value="https://le-bot.cf")
-                await ctx.reply(embed=embed_site)
+                await ctx.reply(embed=embed_site, components = [
+                Button(label = "🤌 Lien", style=5, url="https://le-bot.cf")])
 
             #Sinon réponse du bot si la commande est désactivée
             else :
