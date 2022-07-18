@@ -165,7 +165,7 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
 
                 ▶️ Le prefix de Le_Bot change ! Il s'agit désormais de `{}` au lieu de `!`
 
-                ▶️ Pour toutes questions, veuillez contacter le créateur de Le_Bot : `nathouneyoutube@hotmail.com` par mail ou `Nathoune#3630` sur Discord.""".format(config["prefix"]), inline=True)
+                ▶️ Pour toutes questions, veuillez contacter le créateur de Le_Bot : `nathoune@le-bot.cf` par mail ou `Nathoune#3630` sur Discord.""".format(config["prefix"]), inline=True)
 
                 while True:
                     #En attente d'un choix
