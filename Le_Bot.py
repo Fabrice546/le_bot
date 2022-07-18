@@ -7,7 +7,13 @@ import json
 from discord import Embed
 from discord.ext import commands
 import os
+from os import system
 from discord_components import *
+from colorama import Fore, init, Style
+
+#Défition nom de la fenêtre
+system("title " + "Le_Bot par Nathoune#3630")
+system('mode con: cols=72 lines=23')
 
 #Ouverture et configuration des 2 fichiers json pour les mots auxquels Le_Bot réagit, le préfix et le token
 with open('./config.json', 'r', encoding='utf-8') as cjson:
@@ -26,106 +32,29 @@ bot = commands.Bot(command_prefix= config["prefix"], help_command=None, news_pag
 #Définition pour les boutons
 DiscordComponents(bot)
 
+#Définition pour Colorama
+init(convert=True)
+
 #Définition de la fonction main
 def main():
     #Il essaye de faire tout ce qui suit
     try:
         #Affichage d'une "interface"
-        print("""
-             ██▓    ▓█████      ▄▄▄▄    ▒█████  ▄▄▄█████▓
-            ▓██▒    ▓█   ▀     ▓█████▄ ▒██▒  ██▒▓  ██▒ ▓▒
-            ▒██░    ▒███       ▒██▒ ▄██▒██░  ██▒▒ ▓██░ ▒░
-            ▒██░    ▒▓█  ▄     ▒██░█▀  ▒██   ██░░ ▓██▓ ░ 
-            ░██████▒░▒████    ▒░▓█  ▀█▓░ ████▓▒░  ▒██▒ ░ 
-            ░ ▒░▓  ░░░ ▒░     ░░▒▓███▀▒░ ▒░▒░▒░   ▒ ░░   
-            ░ ░ ▒  ░ ░ ░      ░▒░▒   ░   ░ ▒ ▒░     ░    
-              ░ ░      ░        ░    ░ ░ ░ ░ ▒    ░      
-                ░  ░   ░      ░ ░          ░ ░           
-        """)
+        print(Fore.LIGHTRED_EX + r"""
+     ___       _______           ________  ________  _________   
+    |\  \     |\  ___ \         |\   __  \|\   __  \|\___   ___\ 
+    \ \  \    \ \   __/|        \ \  \|\ /\ \  \|\  \|___ \  \_| 
+     \ \  \    \ \  \_|/__       \ \   __  \ \  \\\  \   \ \  \  
+      \ \  \____\ \  \_|\ \ ______\ \  \|\  \ \  \\\  \   \ \  \ 
+       \ \_______\ \_______\ ______\_\_______\ \_______\   \ \__\
+        \|_______|\|_______||_______|\|_______|\|_______|    \|__|
+    
+
+                           Nathoune#3630
+""")
         
         #Message pour prévenir que Le_Bot va bientôt être en ligne
-        print("Mise en ligne, veuiller patientez un instant.\n\nMise en ligne . . . .")
-
-        #Définition des pages de la commande "help" car elle est dynamique
-        #Page 1 :
-        page1_h = embed_help_page_1 = discord.Embed(title="⚙️ Commandes :\n", color=0xffab33)
-        embed_help_page_1.add_field(name="📃 {}h".format(config["prefix"]), value="`Envoyer ce message.`")
-        embed_help_page_1.add_field(name="📑 {}news".format(config["prefix"]), value="`Afficher les nouveautés.`", inline=False)
-        embed_help_page_1.add_field(name="📞 {}serveur".format(config["prefix"]), value="`Pour pouvoir rejoindre le serveur Discord.`", inline=False)
-        embed_help_page_1.add_field(name="🗒️ {}confidentiality".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
-        embed_help_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot.`", inline=False)
-        embed_help_page_1.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
-        embed_help_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
-        embed_help_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=False)
-        embed_help_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. Attention cette commande requiert les persmissions administrateur !`", inline=False)
-        embed_help_page_1.add_field(name="🚮 {}delete invits".format(config["prefix"]), value="`Permet de désactiver ou activer la suppression automatique des liens d'invitation Discord. Attention cette commande requiert les persmissions administrateur !`", inline=False)
-        embed_help_page_1.set_footer(text="\n ▶️ Mots | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
-
-        #Page 2 :
-        page2_h = embed_help_page_2 = discord.Embed(title="📋 Mots :", color=0xffab33,
-        description="""`
-🟡 Salut              🟡 Le bot est éclaté    🟡 Lol
-🟡 Yo                 🟡 Le bot est nul       🟡 YouTube
-🟡 Comment tu vas ?   🟡 Tu sers à rien       🟡 3D
-🟡 Bonjour            🟡 Re                   🟡 VFX
-🟡 Aide moi           🟡 Nathoune             🟡 Hello
-🟡 Aide-moi           🟡 Bien et toi ?        🟡 Abonnement
-🟡 Bravo              🟡 Bien et toi          🟡 Java
-🟡 Pourquoi ?         🟡 Raid                 🟡 Python
-🟡 Pourquoi ?         🟡 Tg le bot            🟡 Bannir
-🟡 Pk                 🟡 Tg                   🟡 Ban
-🟡 Pk ?               🟡 Ta gueule le bot     🟡 Discord
-🟡 Mdr                🟡 Putain               🟡 Feur
-🟡 Ptdr               🟡 Merde                🟡 Nyan Cat
-🟡 Bot                🟡 Jsp                  🟡 Paypal
-🟡 Le bot             🟡 Je sais pas          🟡 Coucou
-🟡 GPU                🟡 CPU                  🟡 RAM
-`""", inline=False)
-        embed_help_page_2.set_footer(text="\nDébut ⏪ | Commandes ◀️ | ▶️ Informations | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
-
-        #Page 3 :
-        page3_h = embed_help_page_5 = Embed(title="📂 Informations :", color=0xffab33)
-        embed_help_page_5.add_field(name="Le_Bot, votre bot interactif !", value="""▶️ Le_Bot répondra à certains de vos mots en ajoutant de l'humour et du dynamisme sur votre serveur !
-
-▶️ Son code source se trouve sur GitHub, il est donc opensource ! Voici son lien : https://github.com/Nathoune-YT/le_bot. Vous pouvez l'améliorer ou simplement l'utiliser tout en suivant la procédure présente dans le README.
-
-▶️ Voici la politique de confidentialité : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt
-
-▶️ Le site web officiel de Le_Bot : https://le-bot.cf (il prend un peu de temps à se charger chez certaines personnes)
-
-▶️ Le prefix de Le_Bot change ! Il s'agit désormais de `{}` au lieu de `!`
-
-▶️ Pour toutes questions, veuillez contacter le créateur de Le_Bot : `nathouneyoutube@hotmail.com` par mail ou `Nathoune#3630` sur Discord.""".format(config["prefix"]), inline=True)
-        embed_help_page_5.set_footer(text="\nDébut ⏪ | Mots ◀️\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
-
-        #Mise en place des pages pour la commande "help"
-        bot.help_pages = [page1_h, page2_h, page3_h]
-
-        #Définition des pages de la commande "news" car elle est dynamique
-        #Page 1 :
-        page1_news = embed_news_page_1 = discord.Embed(title="📈 Nouvelles commandes :", color=0xffab33)
-        embed_news_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot.`", inline=False)
-        embed_news_page_1.add_field(name="❓ {}how_work".format(config["prefix"]), value="`Comment fonctionne la nouvelle commande 'help'.`", inline=False)
-        embed_news_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
-        embed_news_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message. `", inline=False)
-        embed_news_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. Attention cette commande requiert les persmissions administrateur !`", inline=False)
-        embed_news_page_1.add_field(name="🚮 {}delete invits".format(config["prefix"]), value="`Permet de désactiver ou activer la suppression automatique des liens d'invitation Discord. Attention cette commande requiert les persmissions administrateur !`", inline=False)
-        embed_news_page_1.set_footer(text="\n ▶️ Nouveaux mots | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
-
-        #Page 2 :
-        page2_news = embed_news_page_2 = discord.Embed(title="⏏️ Nouveaux mots :", color=0xffab33, description="""`
-🟡 Feur            🟡 RAM    
-🟡 Paypal          🟡 GPU   
-🟡 Nyan Cat        🟡 CPU   
-`""")
-        embed_news_page_2.set_footer(text="\n Début ⏪ | Nouvelles commandes ◀️ | ▶️ Nouveau préfix | ⏩ Fin\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
-
-        #Page 3 :
-        page3_news = embed_news_page_3 = discord.Embed(title="🤟 Nouveau préfix !", color=0xffab33, description="Le_Bot possède un nouveau préfix, il s'agit désormais de `{}` au lieu de `!`.".format(config["prefix"]))
-        embed_news_page_3.set_footer(text="\nDébut ⏪ | Nouveaux mots ◀️\n\n🚨Réinvite moi pour pouvoir changer de pages : \nhttps://le-bot.cf ou clique sur le bouton bleu sur mon profil🚨")
-
-        #Mise en place des pages pour la commande "news"
-        bot.news_pages = [page1_news, page2_news, page3_news]
+        print(Fore.LIGHTBLACK_EX + """\n\n           Mise en ligne, veuiller patientez un instant.\n""")
 
         @bot.event
         async def on_ready():
@@ -133,7 +62,9 @@ def main():
             activity = discord.Game(name="être inutile", type=1)
             await bot.change_presence(status=discord.Status.online, activity=activity)
             #Affichage d'un message lors de la mise en ligne
-            print('\n\n\n                >En ligne< \n\n\n\n>>> NE SURTOUT PAS FERMER CETTE FENÊTRE ! LE BOT EST EN LIGNE UNIQUEMENT QUAND CETTE DERNIÈRE EST OUVERTE ! <<<\n\n\n®Nathoune 2022')
+            print(f"""
+                            {Fore.LIGHTGREEN_EX}En ligne
+\n\n      {Fore.LIGHTBLACK_EX}Lors de la fermeture de la fenêtre, le bot sera {Fore.LIGHTRED_EX}hors-ligne.""")
 
         
         @bot.event
@@ -146,6 +77,7 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             await member.send(embed=embed_new_member)
 
         @bot.event
+        #Réponse du bot aux mots définit
         async def on_message(message):
             #Permet au bot de comprendre qu'il y a des commandes par la suite
             await bot.process_commands(message)
@@ -172,45 +104,94 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
                 #Début de la commande help
-                #Actuellement à la page 1
-                current = 0
-                msg = await ctx.reply(
-                    embed=bot.help_pages[current],
-                    #Définition des émojis des bouttons
-                    components=[[Button(style=ButtonStyle.grey, label="⏪"), Button(style=ButtonStyle.grey, label="◀️"), Button(style=ButtonStyle.grey, label="▶️"), Button(style=ButtonStyle.grey, label="⏩")]])
-                
+                #Définition de l'embed
+                embed_help = discord.Embed(title = "🤖 Option à choisir :", description="Une fois l'option choisie, un nouveau message sera envoyé !", color=0xffab33)
+                await ctx.reply(
+                    #Envoie de l'embed
+                    embed=embed_help,
+                    #Envoie du menu interactif
+                    components = [
+                        Select(
+                            #Ce qui est marqué dans le menu
+                            placeholder = "Choisis une option",
+                            options = [
+                                #Les options
+                                SelectOption(label = "⚙️ Commandes", value = "⚙️ Commandes"),
+                                SelectOption(label = "📋 Mots", value = "📋 Mots"),
+                                SelectOption(label = "📂 Informations", value = "📂 Informations")])])
+
+                #Définition des pages de la commande "news" car elle est dynamique
+                #Page 1 :
+                embed_help_page_1 = discord.Embed(title="⚙️ Commandes :\n", color=0xffab33)
+                embed_help_page_1.add_field(name="📃 {}h".format(config["prefix"]), value="`Envoye le menu de selection.`")
+                embed_help_page_1.add_field(name="📑 {}news".format(config["prefix"]), value="`Affiche les nouveautés.`", inline=False)
+                embed_help_page_1.add_field(name="📞 {}serveur".format(config["prefix"]), value="`Envoie le serveur discord du créateur de Le_Bot.`", inline=False)
+                embed_help_page_1.add_field(name="🗒️ {}confidentiality".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
+                embed_help_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot.`", inline=False)
+                embed_help_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
+                embed_help_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=False)
+                embed_help_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. 🟠`", inline=False)
+                embed_help_page_1.add_field(name="🚮 {}delete invits".format(config["prefix"]), value="`Permet de désactiver ou activer la suppression automatique des liens d'invitation Discord. 🟠`", inline=False)
+                embed_help_page_1.set_footer(text="🟠 : Requiert les permissions administrateur.")
+
+                #Page 2 :
+                embed_help_page_2 = discord.Embed(title="📋 Mots :", color=0xffab33,
+                description="""`🟡 Salut              🟡 Le bot est éclaté    🟡 Lol
+🟡 Yo                 🟡 Le bot est nul       🟡 YouTube
+🟡 Comment tu vas ?   🟡 Tu sers à rien       🟡 3D
+🟡 Bonjour            🟡 Re                   🟡 VFX
+🟡 Aide moi           🟡 Nathoune             🟡 Hello
+🟡 Aide-moi           🟡 Bien et toi ?        🟡 Abonnement
+🟡 Bravo              🟡 Bien et toi          🟡 Java
+🟡 Pourquoi ?         🟡 Raid                 🟡 Python
+🟡 Pourquoi ?         🟡 Tg le bot            🟡 Bannir
+🟡 Pk                 🟡 Tg                   🟡 Ban
+🟡 Pk ?               🟡 Ta gueule le bot     🟡 Discord
+🟡 Mdr                🟡 Putain               🟡 Feur
+🟡 Ptdr               🟡 Merde                🟡 Nyan Cat
+🟡 Bot                🟡 Jsp                  🟡 Paypal
+🟡 Le bot             🟡 Je sais pas          🟡 Coucou
+🟡 GPU                🟡 CPU                  🟡 RAM`""", inline=False)
+
+                #Page 3 :
+                embed_help_page_3 = Embed(title="📂 Informations :", color=0xffab33)
+                embed_help_page_3.add_field(name="Le_Bot, votre bot interactif !", value="""▶️ Le_Bot répondra à certains de vos mots en ajoutant de l'humour et du dynamisme sur votre serveur !
+
+                ▶️ Son code source se trouve sur GitHub, il est donc opensource ! Voici son lien : https://github.com/Nathoune-YT/le_bot. Vous pouvez l'améliorer ou simplement l'utiliser tout en suivant la procédure présente dans le README.
+
+                ▶️ Voici la politique de confidentialité : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt
+
+                ▶️ Le site web officiel de Le_Bot : https://le-bot.cf (il prend un peu de temps à se charger chez certaines personnes)
+
+                ▶️ Le prefix de Le_Bot change ! Il s'agit désormais de `{}` au lieu de `!`
+
+                ▶️ Pour toutes questions, veuillez contacter le créateur de Le_Bot : `nathouneyoutube@hotmail.com` par mail ou `Nathoune#3630` sur Discord.""".format(config["prefix"]), inline=True)
+
                 while True:
-                    previous_page = current
-                    interaction = await bot.wait_for("button_click")
-                    if interaction.component.label == '⏪': 
-                        current = 0
+                    #En attente d'un choix
+                    interaction = await bot.wait_for("select_option")
+                    #Si le choix est "⚙️ Commandes"
+                    if interaction.values[0] == '⚙️ Commandes':
+                        #Il envoie l'embed de la page 1
+                        await interaction.send(embed = embed_help_page_1, ephemeral=False)
 
-                    if interaction.component.label == '◀️':
-                        if current > 0:
-                            current -= 1
+                    #Si le choix est "📋 Mots"
+                    if interaction.values[0] == '📋 Mots':
+                        #Il envoie l'embed de la page 2
+                        await interaction.send(embed = embed_help_page_2, ephemeral=False)
 
-                    if interaction.component.label == '▶️':
-                        if current < len(bot.help_pages) - 1:
-                            current += 1
-
-                    if interaction.component.label == '⏩':
-                        current = len(bot.help_pages) - 1
-
-                    if current != previous_page:
-                        #Modification du message
-                        await msg.edit(embed=bot.help_pages[current])
-
-                    #Envoie du message pour savoir le nombre de pages
-                    embed_current_page = discord.Embed(title = f"Tu es a la page : {current+1}/3", description="Ce message va s'auto-supprimer.", color = 0xffab33)
-                    await interaction.send(embed=embed_current_page, ephemeral=False, delete_after=2)
+                    #Si le choix est "📂 Informations"
+                    if interaction.values[0] == '📂 Informations':
+                        #Il envoie l'embed de la page 3
+                        await interaction.send(embed = embed_help_page_3, ephemeral=False)
 
             #Réponse du bot si la commande est désactivée
             else :
-                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle ping` pour la réactiver.".format(config["prefix"]), color=0xff0000)
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle h` pour la réactiver.".format(config["prefix"]), color=0xff0000)
                 await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
-        #Définition de la commande "news"
+        #Définition de la commande "news" dynamique
         async def news(ctx):
             #Savoir si la commande est activée ou désactivée
             with open('./toggle/news_toggle.txt', 'r') as file:
@@ -222,39 +203,60 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
 
             #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
-                #Début de la commande help
-                #Actuellement à la page 1
-                current = 0
-                msg = await ctx.reply(
-                    embed=bot.news_pages[current],
-                    #Définition des émojis des bouttons
-                    components=[[Button(style=ButtonStyle.grey, label="⏪"), Button(style=ButtonStyle.grey, label="◀️"), Button(style=ButtonStyle.grey, label="▶️"), Button(style=ButtonStyle.grey, label="⏩")]])
-                
+                #Début de la commande news
+                #Définition de l'embed
+                embed_news = discord.Embed(title = "🤖 Option à choisir :", description="Une fois l'option choisie, un nouveau message sera envoyé !", color=0xffab33)
+                await ctx.reply(
+                    #Envoie de l'embed
+                    embed=embed_news,
+                    #Envoie du menu interactif
+                    components = [
+                        Select(
+                            #Ce qui est marqué dans le menu
+                            placeholder = "Choisis une option",
+                            options = [
+                                #Les options
+                                SelectOption(label = "📈 Nouvelles commandes", value = "📈 Nouvelles commandes"),
+                                SelectOption(label = "⏏️ Nouveaux mots", value = "⏏️ Nouveaux mots"),
+                                SelectOption(label = "🤟 Nouveau préfix", value = "🤟 Nouveau préfix")])])
+
+                #Définition des pages de la commande "news" car elle est dynamique
+                #Page 1 :
+                embed_news_page_1 = discord.Embed(title="📈 Nouvelles commandes :", color=0xffab33)
+                embed_news_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot.`", inline=False)
+                embed_news_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
+                embed_news_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message. `", inline=False)
+                embed_news_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. 🟠`", inline=False)
+                embed_news_page_1.add_field(name="🚮 {}delete invits".format(config["prefix"]), value="`Permet de désactiver ou activer la suppression automatique des liens d'invitation Discord. 🟠`", inline=False)
+                embed_news_page_1.set_footer(text="🟠 : Requiert les permissions administrateur.")
+
+                #Page 2 :
+                embed_news_page_2 = discord.Embed(title="⏏️ Nouveaux mots :", color=0xffab33, description="""`🟡 Feur            🟡 RAM
+🟡 Paypal          🟡 GPU
+🟡 Nyan Cat        🟡 CPU`""")
+
+                #Page 3 :
+                embed_news_page_3 = discord.Embed(title="🤟 Nouveau préfix !", color=0xffab33, description="Le_Bot possède un nouveau préfix, il s'agit désormais de `{}` au lieu de `!`.".format(config["prefix"]))
+
                 while True:
-                    previous_page = current
-                    interaction = await bot.wait_for("button_click")
-                    if interaction.component.label == '⏪': 
-                        current = 0
+                    #En attente d'un choix
+                    interaction = await bot.wait_for("select_option")
+                    #Si le choix est "📈 Nouvelles commandes"
+                    if interaction.values[0] == '📈 Nouvelles commandes':
+                        #Il envoie l'embed de la page 1
+                        await interaction.send(embed = embed_news_page_1, ephemeral=False)
 
-                    if interaction.component.label == '◀️':
-                        if current > 0:
-                            current -= 1
+                    #Si le choix est "⏏️ Nouveaux mots"
+                    if interaction.values[0] == '⏏️ Nouveaux mots':
+                        #Il envoie l'embed de la page 2
+                        await interaction.send(embed = embed_news_page_2, ephemeral=False)
 
-                    if interaction.component.label == '▶️':
-                        if current < len(bot.news_pages) - 1:
-                            current += 1
+                    #Si le choix est "🤟 Nouveau préfix"
+                    if interaction.values[0] == '🤟 Nouveau préfix':
+                        #Il envoie l'embed de la page 3
+                        await interaction.send(embed = embed_news_page_3, ephemeral=False)
 
-                    if interaction.component.label == '⏩':
-                        current = len(bot.news_pages) - 1
-
-                    if current != previous_page:
-                        #Modification du message
-                        await msg.edit(embed=bot.news_pages[current])
-
-                    #Envoie du message pour savoir le nombre de pages
-                    embed_current_page = discord.Embed(title = f"Tu es a la page : {current+1}/3", description="Ce message va s'auto-supprimer.", color = 0xffab33)
-                    await interaction.send(embed=embed_current_page, ephemeral=False, delete_after=2)
-            #Sinon réponse du bot si la commande est désactivée
+            #Réponse du bot si la commande est désactivée
             else :
                 embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle news` pour la réactiver.".format(config["prefix"]), color=0xff0000)
                 await ctx.reply(embed=embed_disabled_command)
@@ -275,7 +277,8 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                 #Début de la commande "confidentiality"
                 embed_confidentiality = discord.Embed(title="🧑‍⚖ La politique de confidentialité de Le_Bot", color=0xffab33, url="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
                 embed_confidentiality.add_field(name="Le lien vers la politique de confidentialité :", value="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
-                await ctx.reply(embed=embed_confidentiality)
+                await ctx.reply(embed=embed_confidentiality, components = [
+                Button(label = "🧑‍⚖ Lien", style=5, url="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")])
 
             #Sinon réponse du bot si la commande est désactivée
             else :
