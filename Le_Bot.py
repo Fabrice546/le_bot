@@ -127,7 +127,7 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                     embed_help_page_1 = discord.Embed(title="⚙️ Commandes :\n", color=0xffab33)
                     embed_help_page_1.add_field(name="📃 {}h".format(config["prefix"]), value="`Envoie le menu de selection.`")
                     embed_help_page_1.add_field(name="📑 {}news".format(config["prefix"]), value="`Affiche les nouveautés.`", inline=False)
-                    embed_help_page_1.add_field(name="📞 {}serveur".format(config["prefix"]), value="`Envoie le serveur discord du créateur de Le_Bot.`", inline=False)
+                    embed_help_page_1.add_field(name="📞 {}server".format(config["prefix"]), value="`Envoie le serveur discord du créateur de Le_Bot.`", inline=False)
                     embed_help_page_1.add_field(name="🗒️ {}privacy".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
                     embed_help_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot.`", inline=False)
                     embed_help_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
