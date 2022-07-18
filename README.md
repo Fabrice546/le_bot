@@ -10,6 +10,10 @@
   <a href="#license">License</a>
 </p>
 
+<h1 align="center">
+<a href="https://le-bot.cf"><img src="https://i.imgur.com/Q6XKVSe.png" width="60"></a>
+</h1>
+
 # Présentation
 
 Le_Bot est un bot interactif qui réagit à certains mots et dynamise votre serveur Discord ! Il peut se rendre très sympatique ou diabolique (je comprends qu'il vous énerve lol). Vous pouvez directement [ajouter Le_Bot](https://discord.com/oauth2/authorize?client_id=881098458482753586&permissions=2048&scope=bot) à votre serveur, il possédera les réponses aux mots présents dans le `liste.json`. 
@@ -18,7 +22,7 @@ Le_Bot possède un site web, le voici : https://le-bot.cf
 
 La commande `help` est devenue dynamique ! Voici la démonstration :
 
-![Demo_help](https://github.com/Nathoune-YT/le_bot/blob/main/Images/Demo_help.gif)
+![Demo_help](https://github.com/Nathoune-YT/le_bot/blob/main/images/Demo_help.gif)
 
 Le_Bot a été certfié par Discord ! <a href="https://discord.com/oauth2/authorize?client_id=881098458482753586&permissions=10240&scope=bot"><img src="https://i.imgur.com/5dqIQGd.png" width="60"></a>
 
@@ -40,7 +44,11 @@ Vous pouvez ajouter ou supprimer les mots auxquels Le_Bot réagit dans le fichie
 
 Vous trouverez dans le dossier `toggle` des fichiers textes au nom de chaques commandes proposées par Le_Bot. Dans ces fichiers textes seront stockés les IDs des serveurs qui auront désactivés une de ses commandes. Le_Bot vérifira à chaque utilisation d'une commande si l'ID du seveur sur lequel la commande a été demandée est présente dans un de ces fichiers texte et adaptera sa réponse pour activer ou non la commande. 
 
-Lancer `Le_Bot.py` et votre bot sera en ligne !  
+Lancer `Le_Bot.py` et votre bot sera en ligne !
+
+Voici l'interface que vous aurez si l'installation et la mise en ligne se sont bien passé :
+
+<img src="https://i.imgur.com/2XkMWSB.png" width="500">
 
 Amusez-vous bien !
 
