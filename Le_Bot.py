@@ -133,7 +133,7 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                     embed_help_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
                     embed_help_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=False)
                     embed_help_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. 🟠`", inline=False)
-                    embed_help_page_1.add_field(name="🚮 {}delete invits".format(config["prefix"]), value="`Permet de désactiver ou activer la suppression automatique des liens d'invitation Discord. 🟠`", inline=False)
+                    embed_help_page_1.add_field(name="🚮 {}delete invites".format(config["prefix"]), value="`Permet de désactiver ou activer la suppression automatique des liens d'invitation Discord. 🟠`", inline=False)
                     embed_help_page_1.set_footer(text="🟠 : Requiert les permissions administrateur.")
 
                     #Page 2 :
@@ -234,7 +234,7 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                     embed_news_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
                     embed_news_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message. `", inline=False)
                     embed_news_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. 🟠`", inline=False)
-                    embed_news_page_1.add_field(name="🚮 {}delete invits".format(config["prefix"]), value="`Permet de désactiver ou activer la suppression automatique des liens d'invitation Discord. 🟠`", inline=False)
+                    embed_news_page_1.add_field(name="🚮 {}delete invites".format(config["prefix"]), value="`Permet de désactiver ou activer la suppression automatique des liens d'invitation Discord. 🟠`", inline=False)
                     embed_news_page_1.set_footer(text="🟠 : Requiert les permissions administrateur.")
 
                     #Page 2 :
@@ -298,9 +298,9 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
 
         @bot.command()
         #Définition de la commande "serveur"
-        async def serveur(ctx):
+        async def server(ctx):
             #Savoir si la commande est activée ou désactivée
-            with open('./toggle/serveur_toggle.txt', 'r') as file:
+            with open('./toggle/server_toggle.txt', 'r') as file:
                 #Lecture du fichier avec les IDs des serveurs où la commande est désactivée
                 disabled_command = file.read().splitlines()
 
@@ -310,9 +310,9 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
                 #Début de la commande "serveur"
-                embed_serveur = discord.Embed(title="🔥 Le serveur du créateur de **Le_Bot**.", color=0xffab33, url="https://discord.gg/b6jjy5yKXV")
-                embed_serveur.add_field(name="Le lien du serveur de Nathoune :", value="https://discord.gg/b6jjy5yKXV")
-                await ctx.reply(embed=embed_serveur, components = [
+                embed_server = discord.Embed(title="🔥 Le serveur du créateur de **Le_Bot**.", color=0xffab33, url="https://discord.gg/b6jjy5yKXV")
+                embed_server.add_field(name="Le lien du serveur de Nathoune :", value="https://discord.gg/b6jjy5yKXV")
+                await ctx.reply(embed=embed_server, components = [
                 Button(label = "📞 Lien", style=5, url="https://discord.gg/b6jjy5yKXV")])
 
             #Sinon réponse du bot si la commande est désactivée
@@ -478,17 +478,17 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
         #Permission administrateur pour éxécuter cette commande
         @commands.has_permissions(administrator=True)
         @bot.command()
-        #Définition de la commande "delete invits"
+        #Définition de la commande "delete invites"
         async def delete(ctx, extension):
             try:
                 #Il essaye d'activer l'extension
                 bot.load_extension(f'cogs.{extension}')
-                embed_toggle_enabled = discord.Embed(title="✅ A partir de maintenant, je supprimerai les invitations vers d'autre serveurs Discord.", description="Fais `{}delete invits` pour désactiver la suppression automatique des liens d'invitations Discord.".format(config["prefix"]),color=0x00d731)
+                embed_toggle_enabled = discord.Embed(title="✅ A partir de maintenant, je supprimerai les invitations vers d'autre serveurs Discord.", description="Fais `{}delete invites` pour désactiver la suppression automatique des liens d'invitations Discord.".format(config["prefix"]),color=0x00d731)
                 await ctx.reply(embed=embed_toggle_enabled)
             except:
                 #Si elle est déjà activée, il la désactive
                 bot.unload_extension(f'cogs.{extension}')
-                embed_disabled_command = discord.Embed(title="❌ A partir de maintenant, je ne supprimerai plus les invitations vers d'autre serveurs Discord.", description="Fais `{}delete invits` pour réactiver la suppression automatique des liens d'invitations Discord.".format(config["prefix"]), color=0xff0000)
+                embed_disabled_command = discord.Embed(title="❌ A partir de maintenant, je ne supprimerai plus les invitations vers d'autre serveurs Discord.", description="Fais `{}delete invites` pour réactiver la suppression automatique des liens d'invitations Discord.".format(config["prefix"]), color=0xff0000)
                 await ctx.reply(embed=embed_disabled_command)
 
         for filename in os.listdir('./cogs'):
