@@ -128,7 +128,7 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                     embed_help_page_1.add_field(name="📃 {}h".format(config["prefix"]), value="`Envoie le menu de selection.`")
                     embed_help_page_1.add_field(name="📑 {}news".format(config["prefix"]), value="`Affiche les nouveautés.`", inline=False)
                     embed_help_page_1.add_field(name="📞 {}serveur".format(config["prefix"]), value="`Envoie le serveur discord du créateur de Le_Bot.`", inline=False)
-                    embed_help_page_1.add_field(name="🗒️ {}confidentiality".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
+                    embed_help_page_1.add_field(name="🗒️ {}privacy".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
                     embed_help_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot.`", inline=False)
                     embed_help_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
                     embed_help_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=False)
@@ -273,10 +273,10 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                 await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
-        #Définition de la commande "confidentiality"
-        async def confidentiality(ctx):
+        #Définition de la commande "privacy"
+        async def privacy(ctx):
             #Savoir si la commande est activée ou désactivée
-            with open('./toggle/confidentiality_toggle.txt', 'r') as file:
+            with open('./toggle/privacy_toggle.txt', 'r') as file:
                 #Lecture du fichier avec les IDs des serveurs où la commande est désactivée
                 disabled_command = file.read().splitlines()
 
@@ -285,15 +285,15 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
 
             #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
-                #Début de la commande "confidentiality"
-                embed_confidentiality = discord.Embed(title="🧑‍⚖ La politique de confidentialité de Le_Bot", color=0xffab33, url="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
-                embed_confidentiality.add_field(name="Le lien vers la politique de confidentialité :", value="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
-                await ctx.reply(embed=embed_confidentiality, components = [
+                #Début de la commande "privacy"
+                embed_privacy = discord.Embed(title="🧑‍⚖ La politique de confidentialité de Le_Bot", color=0xffab33, url="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
+                embed_privacy.add_field(name="Le lien vers la politique de confidentialité :", value="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
+                await ctx.reply(embed=embed_privacy, components = [
                 Button(label = "🧑‍⚖ Lien", style=5, url="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")])
 
             #Sinon réponse du bot si la commande est désactivée
             else :
-                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle confidentiality` pour la réactiver.".format(config["prefix"]), color=0xff0000)
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle privacy` pour la réactiver.".format(config["prefix"]), color=0xff0000)
                 await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
