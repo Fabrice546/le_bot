@@ -58,7 +58,9 @@ Le_Bot est sous licence [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.en.htm
 
 Si vous désirez vous baser du code de Le_Bot pour créer votre propre bot Discord, veuillez uploader votre nouveau script python sur GitHub avec la même [**licence**](https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/LICENSE) et mentionnez l'auteur `Nathoune`.
 
-Retrouvez ci-dessous le [lien du serveur Discord](https://discord.gg/b6jjy5yKXV), celui [de ma chaîne YouTube](https://www.youtube.com/c/Nathoune) et celui pour [ajouter directement Le_Bot](https://discord.com/oauth2/authorize?client_id=881098458482753586&permissions=2048&scope=bot).  
+Retrouvez ci-dessous le [lien du serveur Discord](https://discord.gg/b6jjy5yKXV), celui [de ma chaîne YouTube](https://www.youtube.com/c/Nathoune) et celui pour [ajouter directement Le_Bot](https://discord.com/oauth2/authorize?client_id=881098458482753586&permissions=2048&scope=bot).
+
+Pour toutes questions ou demandes, veuillez me contactez soit par Discord (Nathoune#3630) ou par mail (nathoune@le-bot.cf).
 
 <table align="center">
   <tr>
