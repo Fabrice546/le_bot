@@ -3,7 +3,7 @@ FR : Politique de confidentialité de Le_Bot :
 
 Le_Bot respecte toutes les lois relatives à la protection de la vie privée. Le_Bot ne stocke pas, mais collecte des données. Il recueille vos messages envoyés pour pouvoir les analyser et y répondre correctement. Il répondra à vos mots et ajoutera du dynamisme à votre serveur.
 
-Propriétaire : Nathoune #3630 sur Discord, ou nathouneyoutube@hotmail.com par mail. Pour toutes questions relatives au bot, contactez moi !
+Propriétaire : Nathoune #3630 sur Discord, ou nathoune@le-bot.cf par mail. Pour toutes questions relatives au bot, contactez moi !
 --------------------------------------------------
 
 --------------------------------------------------
@@ -11,5 +11,5 @@ EN : Le_Bot Privacy Policy:
 
 Le_Bot complies with all relevant privacy laws. Le_Bot does not store, but collects data. It collects your sent messages to be able to analyze them and answer correctly. It will respond to your words and add dynamism to your server.
 
-Owner : Nathoune #3630 on Discord, or nathouneyoutube@hotmail.com by mail. For any question about the bot, contact me !
+Owner : Nathoune #3630 on Discord, or nathoune@le-bot.cf by mail. For any question about the bot, contact me !
 --------------------------------------------------
