@@ -159,15 +159,15 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                     embed_help_page_3 = Embed(title="📂 Informations :", color=0xffab33)
                     embed_help_page_3.add_field(name="Le_Bot, votre bot interactif !", value="""▶️ Le_Bot répondra à certains de vos mots en ajoutant de l'humour et du dynamisme sur votre serveur !
 
-                    ▶️ Son code source se trouve sur GitHub, il est donc opensource ! Voici son lien : https://github.com/Nathoune-YT/le_bot. Vous pouvez l'améliorer ou simplement l'utiliser tout en suivant la procédure présente dans le README.
+▶️ Son code source se trouve sur GitHub, il est donc opensource ! Voici son lien : https://github.com/Nathoune-YT/le_bot. Vous pouvez l'améliorer ou simplement l'utiliser tout en suivant la procédure présente dans le README.
 
-                    ▶️ Voici la politique de confidentialité : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt
+▶️ Voici la politique de confidentialité : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt
 
-                    ▶️ Le site web officiel de Le_Bot : https://le-bot.cf (il prend un peu de temps à se charger chez certaines personnes)
+▶️ Le site web officiel de Le_Bot : https://le-bot.cf (il prend un peu de temps à se charger chez certaines personnes)
 
-                    ▶️ Le prefix de Le_Bot change ! Il s'agit désormais de `{}` au lieu de `!`
+▶️ Le prefix de Le_Bot change ! Il s'agit désormais de `{}` au lieu de `!`
 
-                    ▶️ Pour toutes questions, veuillez contacter le créateur de Le_Bot : `nathouneyoutube@hotmail.com` par mail ou `Nathoune#3630` sur Discord.""".format(config["prefix"]), inline=True)
+▶️ Pour toutes questions, veuillez contacter le créateur de Le_Bot : \n`nathoune@le-bot.cf` par mail ou `Nathoune#3630` sur Discord.""".format(config["prefix"]), inline=True)
 
                     while True:
                         #En attente d'un choix
@@ -175,7 +175,7 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                         #Si le choix est "⚙️ Commandes"
                         if interaction.values[0] == '⚙️ Commandes':
                             #Il envoie l'embed de la page 1
-                            await interaction.send(embed = embed_help_page_1, ephemeral=False)
+                            await interaction.send(embed= embed_help_page_1, ephemeral=False)
 
                         #Si le choix est "📋 Mots"
                         if interaction.values[0] == '📋 Mots':
