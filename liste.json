@@ -194,5 +194,37 @@
     {
         "name": "ram",
         "value": "Ta mémoire vive (#le_bot_prof :man_teacher:)"
+    },
+    {
+        "name": "nitro",
+        "value": "Moi je veux bien que tu me donne gratuitement nitro stp"
+    },
+    {
+        "name": "france",
+        "value": "Vive la France :flag_fr:"
+    },
+    {
+        "name": "hébergeur",
+        "value": "Ouais j'ai besoin de ça pour survivre, je sais je ne suis pas autonome."
+    },
+    {
+        "name": "snapchat",
+        "value": "Cherche pas, Discord > Snapchat"
+    },
+    {
+        "name": "snap",
+        "value": "Cherche pas, Discord > Snapchat"
+    },
+    {
+        "name": "instagram",
+        "value": "A la limite, si tu veux devenir influenceur, mais pour moi Discord > Instagram"
+    },
+    {
+        "name": "insta",
+        "value": "A la limite, si tu veux devenir influenceur, mais pour moi Discord > Instagram"
+    },
+    {
+        "name": "baka",
+        "value": "Trop dArK bAkKaA 🐲⛓"
     }
 ]
