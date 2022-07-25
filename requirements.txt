@@ -1,3 +1,5 @@
 discord
 discord-components
 colorama
+psutil
+datetime
