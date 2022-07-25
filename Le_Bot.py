@@ -128,7 +128,7 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                     embed_help_page_1.add_field(name="Commandes avec statistiques :", value="** **", inline=False)
                     embed_help_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=True)
                     embed_help_page_1.add_field(name="📊 {}stats".format(config["prefix"]), value="`Toutes les statistiques relatives au bot.`", inline=True)
-                    embed_help_page_1.add_field(name="Commandes pour activer ou en désactiver d'autres :", value="** **", inline=False)
+                    embed_help_page_1.add_field(name="Commande pour activer ou en désactiver d'autres :", value="** **", inline=False)
                     embed_help_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. 🟠`", inline=True)
                     embed_help_page_1.add_field(name="`🟠 : Requiert les permissions administrateur.`", value="** **", inline=False)
                     embed_help_page_1.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
@@ -161,9 +161,9 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
 
 ▶️ Voici la politique de confidentialité : https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt
 
-▶️ Le site web officiel de Le_Bot : https://le-bot.cf (il prend un peu de temps à se charger chez certaines personnes)
+▶️ Le site web officiel de Le_Bot : https://le-bot.cf (il prend un peu de temps à se charger chez certaines personnes.)
 
-▶️ Son préfix est `{}`
+▶️ Son préfix est `{}`.
 
 ▶️ Il supprimera automatiquement les liens d'invitation vers d'autres serveurs Discord excepté pour les administrateurs.
 
@@ -217,7 +217,7 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                     embed_news_page_1.add_field(name="Commandes avec statistiques :", value="** **", inline=False)
                     embed_news_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message. `", inline=True)
                     embed_news_page_1.add_field(name="📊 {}stats".format(config["prefix"]), value="`Toutes les statistiques relatives au bot.`", inline=True)
-                    embed_news_page_1.add_field(name="Commandes pour activer ou en désactiver d'autres :", value="** **", inline=False)
+                    embed_news_page_1.add_field(name="Commande pour activer ou en désactiver d'autres :", value="** **", inline=False)
                     embed_news_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. 🟠`", inline=True)
                     embed_news_page_1.add_field(name="`🟠 : Requiert les permissions administrateur.`", value="** **")
                     embed_news_page_1.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
