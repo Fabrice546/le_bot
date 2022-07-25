@@ -1,34 +1,30 @@
-#Code officiel de Le_Bot par Nathoune#3630
-
-#Importation des librairies nécéssaires
-import asyncio
 import discord
 import json
 from discord import Embed
 from discord.ext import commands
-import os
 import time
 from os import system
 from discord_components import *
 from colorama import Fore, init, Style
+from datetime import datetime
+import psutil
 
-#Défition nom de la fenêtre
 system("title " + "Le_Bot par Nathoune#3630")
 system('mode con: cols=72 lines=23')
 
-#Ouverture et configuration des 2 fichiers json pour les mots auxquels Le_Bot réagit, le préfix et le token
-with open('./config.json', 'r', encoding='utf-8') as cjson:
-    config = json.load(cjson)
+with open('./config.json', 'r', encoding='utf-8') as config_bot:
+    config = json.load(config_bot)
 
-with open('./liste.json', 'r', encoding='utf-8') as ljson:
-    list = json.load(ljson)
+with open('./liste.json', 'r', encoding='utf-8') as list_words:
+    list = json.load(list_words)
 
-#Configuration des intents (rdv Discord Devlopper Portal)
 intents = discord.Intents.default()
 intents.members = True
 
-#Mise en place du bot en précisant le préfix, les pages pour la commande "help" et "news" et les intents (les trois sont définis au dessus)
 bot = commands.Bot(command_prefix= config["prefix"], help_command=None, news_pages=None, intents = intents)
+
+#Définition de la date de connexion
+bot.launch_time = datetime.utcnow()
 
 #Définition pour les boutons
 DiscordComponents(bot)
@@ -36,9 +32,7 @@ DiscordComponents(bot)
 #Définition pour Colorama
 init(convert=True)
 
-#Définition de la fonction main
 def main():
-    #Il essaye de faire tout ce qui suit
     try:
         #Affichage d'une "interface"
         print(Fore.LIGHTRED_EX + r"""
@@ -54,7 +48,6 @@ def main():
                            Nathoune#3630
 """)
         
-        #Message pour prévenir que Le_Bot va bientôt être en ligne
         print(Fore.LIGHTBLACK_EX + """\n\n           Mise en ligne, veuiller patientez un instant.\n""")
 
         @bot.event
@@ -62,14 +55,11 @@ def main():
             #Définition du statut
             activity = discord.Game(name="être inutile", type=1)
             await bot.change_presence(status=discord.Status.online, activity=activity)
-            #Affichage d'un message lors de la mise en ligne
             print(f"""
                             {Fore.LIGHTGREEN_EX}En ligne
 \n\n      {Fore.LIGHTBLACK_EX}Lors de la fermeture de la fenêtre, le bot sera {Fore.LIGHTRED_EX}hors-ligne.""")
 
-        
         @bot.event
-        #Message privé lorsqu'un membre rejoint un serveur sur lequel il y a Le_Bot
         async def on_member_join(member):
             embed_new_member = discord.Embed(title="Salut jeune entrepeneur.", color=0xffab33)
             embed_new_member.add_field(name="""Tu as rejoins un serveur dans lequel je suis, donc attention à toi 😒. 
@@ -78,67 +68,71 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
             await member.send(embed=embed_new_member)
 
         @bot.event
-        #Réponse du bot aux mots définit
         async def on_message(message):
-            #Permet au bot de comprendre qu'il y a des commandes par la suite
+            #Pour que les commandes soient prises en compte
             await bot.process_commands(message)
-            
-            #Détection de "liste.json" et réponse adéquate si un message envoyé correspond à une réponse possible
-            [await message.reply(o['value']) for o in list if o['name'] == message.content.lower()]
+        
+            #Réponse du bot aux mots définit
+            [await message.reply(word['value']) for word in list if word['name'] == message.content.lower()]
 
-            #Réponse du bot quand quelqu'un le mentionne
             if bot.user.mentioned_in(message):
                 embed_mention = discord.Embed(title="Salut :wave:.\nJe suis **Le_Bot**, fais `{}h` pour en savoir plus sur moi et mes commandes !".format(config["prefix"]), color=0xffab33)
-                embed_mention.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_mention.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await message.reply(embed=embed_mention)
 
+            invites_discord_links = [
+            ".gg",
+            ".invite"
+            ]
+
+            if any(word in message.content.lower() for word in invites_discord_links):
+                if message.author.guild_permissions.administrator :
+                    pass
+                else :
+                    await message.delete()
+                    embed_delete_invites = discord.Embed(title = f"Fais pas ta pub :rat:", description=f"Un certain `{message.author}` a envoyé un lien d'invitation vers un autre serveur Discord :rat:. Heureusement",color=0xffab33)
+                    embed_delete_invites.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                    await message.channel.send(embed = embed_delete_invites)
+
         @bot.command()
-        #Définition de la commande "help" dynamique
         async def h(ctx):
             #Savoir si la commande est activée ou désactivée
-            with open('./toggle/h_toggle.txt', 'r') as file:
-                #Lecture du fichier avec les IDs des serveurs où la commande est désactivée
-                disabled_command = file.read().splitlines()
+            with open('./toggle/h_toggle.txt', 'r') as h_toggle_file:
+                disabled_command = h_toggle_file.read().splitlines()
 
-            #Récupération de l'ID du serveur actuelle
             now_id = str(ctx.message.guild.id)
 
-            #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
                 try :
-                    #Début de la commande help
-                    #Définition de l'embed
-                    embed_help = discord.Embed(title = "🤖 Option à choisir :", description="Une fois l'option choisie, un nouveau message sera envoyé !", color=0xffab33)
+                    embed_menu_help = discord.Embed(title = "🤖 Option à choisir :", description="Une fois l'option choisie, un nouveau message sera envoyé !", color=0xffab33)
                     await ctx.reply(
-                        #Envoie de l'embed
-                        embed=embed_help,
+                        embed=embed_menu_help,
                         #Envoie du menu interactif
                         components = [
                             Select(
-                                #Ce qui est marqué dans le menu
                                 placeholder = "Choisis une option",
                                 options = [
-                                    #Les options
                                     SelectOption(label = "⚙️ Commandes", value = "⚙️ Commandes"),
                                     SelectOption(label = "📋 Mots", value = "📋 Mots"),
                                     SelectOption(label = "📂 Informations", value = "📂 Informations")])])
 
-                    #Définition des pages de la commande "news" car elle est dynamique
-                    #Page 1 :
                     embed_help_page_1 = discord.Embed(title="⚙️ Commandes :\n", color=0xffab33)
-                    embed_help_page_1.add_field(name="📃 {}h".format(config["prefix"]), value="`Envoie le menu de selection.`")
-                    embed_help_page_1.add_field(name="📑 {}news".format(config["prefix"]), value="`Affiche les nouveautés.`", inline=False)
-                    embed_help_page_1.add_field(name="📞 {}server".format(config["prefix"]), value="`Envoie le serveur discord du créateur de Le_Bot.`", inline=False)
-                    embed_help_page_1.add_field(name="🗒️ {}privacy".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=False)
-                    embed_help_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot.`", inline=False)
-                    embed_help_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
-                    embed_help_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=False)
-                    embed_help_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. 🟠`", inline=False)
-                    embed_help_page_1.add_field(name="🚮 {}delete invites".format(config["prefix"]), value="`Permet de désactiver ou activer la suppression automatique des liens d'invitation Discord. 🟠`", inline=False)
-                    embed_help_page_1.add_field(name="Complémenatire :", value="`🟠 : Requiert les permissions administrateur.`")
-                    embed_help_page_1.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                    embed_help_page_1.add_field(name="Commandes avec menus :", value="** **", inline=False)
+                    embed_help_page_1.add_field(name="📃 {}h".format(config["prefix"]), value="`Envoie le menu de selection.`", inline=True)
+                    embed_help_page_1.add_field(name="📑 {}news".format(config["prefix"]), value="`Affiche les nouveautés.`", inline=True)
+                    embed_help_page_1.add_field(name="Commandes avec liens :", value="** **", inline=False)
+                    embed_help_page_1.add_field(name="📞 {}server".format(config["prefix"]), value="`Envoie le serveur Discord du créateur de Le_Bot.`", inline=True)
+                    embed_help_page_1.add_field(name="🗒️ {}privacy".format(config["prefix"]), value="`Connaître la politique de confidentialité.`", inline=True)
+                    embed_help_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot.`", inline=True)
+                    embed_help_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=True)
+                    embed_help_page_1.add_field(name="Commandes avec statistiques :", value="** **", inline=False)
+                    embed_help_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message.`", inline=True)
+                    embed_help_page_1.add_field(name="📊 {}stats".format(config["prefix"]), value="`Toutes les statistiques relatives au bot.`", inline=True)
+                    embed_help_page_1.add_field(name="Commandes pour activer ou en désactiver d'autres :", value="** **", inline=False)
+                    embed_help_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. 🟠`", inline=True)
+                    embed_help_page_1.add_field(name="`🟠 : Requiert les permissions administrateur.`", value="** **", inline=False)
+                    embed_help_page_1.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
 
-                    #Page 2 :
                     embed_help_page_2 = discord.Embed(title="📋 Mots :", color=0xffab33,
                     description="""`🟡 Salut              🟡 Le bot est éclaté    🟡 Lol
 🟡 Yo                 🟡 Le bot est nul       🟡 YouTube
@@ -158,9 +152,8 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
 🟡 GPU                🟡 CPU                  🟡 RAM
 🟡 Nitro              🟡 Hébergeur            🟡 France
 🟡 Snapchat           🟡 Instagram            🟡 Baka`""", inline=False)
-                    embed_help_page_2.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                    embed_help_page_2.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
 
-                    #Page 3 :
                     embed_help_page_3 = Embed(title="📂 Informations :", color=0xffab33)
                     embed_help_page_3.add_field(name="Le_Bot, votre bot interactif !", value="""▶️ Le_Bot répondra à certains de vos mots en ajoutant de l'humour et du dynamisme sur votre serveur !
 
@@ -170,342 +163,277 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
 
 ▶️ Le site web officiel de Le_Bot : https://le-bot.cf (il prend un peu de temps à se charger chez certaines personnes)
 
-▶️ Le prefix de Le_Bot change ! Il s'agit désormais de `{}` au lieu de `!`
+▶️ Son préfix est `{}`
+
+▶️ Il supprimera automatiquement les liens d'invitation vers d'autres serveurs Discord excepté pour les administrateurs.
 
 ▶️ Pour toutes questions, veuillez contacter le créateur de Le_Bot : \n`nathoune@le-bot.cf` par mail ou `Nathoune#3630` sur Discord.""".format(config["prefix"]), inline=True)
-                    embed_help_page_3.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                    embed_help_page_3.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
 
                     while True:
                         #En attente d'un choix
                         interaction = await bot.wait_for("select_option")
-                        #Si le choix est "⚙️ Commandes"
                         if interaction.values[0] == '⚙️ Commandes':
-                            #Il envoie l'embed de la page 1
                             await interaction.send(embed= embed_help_page_1, ephemeral=False)
 
-                        #Si le choix est "📋 Mots"
                         if interaction.values[0] == '📋 Mots':
-                            #Il envoie l'embed de la page 2
                             await interaction.send(embed= embed_help_page_2, ephemeral=False)
 
-                        #Si le choix est "📂 Informations"
                         if interaction.values[0] == '📂 Informations':
-                            #Il envoie l'embed de la page 3
                             await interaction.send(embed = embed_help_page_3, ephemeral=False)
 
                 #Pour éviter les erreurs inutiles dans la console
                 except:
                     time.sleep(0.1) 
 
-            #Réponse du bot si la commande est désactivée
             else :
                 embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle h` pour la réactiver.".format(config["prefix"]), color=0xff0000)
-                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
-        #Définition de la commande "news" dynamique
         async def news(ctx):
             #Savoir si la commande est activée ou désactivée
-            with open('./toggle/news_toggle.txt', 'r') as file:
-                #Lecture du fichier avec les IDs des serveurs où la commande est désactivée
-                disabled_command = file.read().splitlines()
+            with open('./toggle/news_toggle.txt', 'r') as news_toggle_file:
+                disabled_command = news_toggle_file.read().splitlines()
 
-            #Récupération de l'ID du serveur actuelle
             now_id = str(ctx.message.guild.id)
 
-            #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
                 try :
-                    #Début de la commande news
-                    #Définition de l'embed
-                    embed_news = discord.Embed(title = "🤖 Option à choisir :", description="Une fois l'option choisie, un nouveau message sera envoyé !", color=0xffab33)
+                    embed_menu_news = discord.Embed(title = "🤖 Option à choisir :", description="Une fois l'option choisie, un nouveau message sera envoyé !", color=0xffab33)
                     await ctx.reply(
-                        #Envoie de l'embed
-                        embed=embed_news,
+                        embed=embed_menu_news,
                         #Envoie du menu interactif
                         components = [
                             Select(
-                                #Ce qui est marqué dans le menu
                                 placeholder = "Choisis une option",
                                 options = [
-                                    #Les options
                                     SelectOption(label = "📈 Nouvelles commandes", value = "📈 Nouvelles commandes"),
                                     SelectOption(label = "⏏️ Nouveaux mots", value = "⏏️ Nouveaux mots"),
                                     SelectOption(label = "🤟 Nouveau préfix", value = "🤟 Nouveau préfix")])])
 
-                    #Définition des pages de la commande "news" car elle est dynamique
-                    #Page 1 :
                     embed_news_page_1 = discord.Embed(title="📈 Nouvelles commandes :", color=0xffab33)
-                    embed_news_page_1.add_field(name="👌 {}site".format(config["prefix"]), value="`Le site officiel de Le_Bot.`", inline=False)
-                    embed_news_page_1.add_field(name="🔗 {}github".format(config["prefix"]), value="`Le_Bot sur GitHub.`", inline=False)
-                    embed_news_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message. `", inline=False)
-                    embed_news_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. 🟠`", inline=False)
-                    embed_news_page_1.add_field(name="🚮 {}delete invites".format(config["prefix"]), value="`Permet de désactiver ou activer la suppression automatique des liens d'invitation Discord. 🟠`", inline=False)
-                    embed_news_page_1.add_field(name="Complémenatire :", value="`🟠 : Requiert les permissions administrateur.`")
-                    embed_news_page_1.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                    embed_news_page_1.add_field(name="Commandes avec statistiques :", value="** **", inline=False)
+                    embed_news_page_1.add_field(name="📶 {}ping".format(config["prefix"]), value="`Tester la vitesse de réception de message. `", inline=True)
+                    embed_news_page_1.add_field(name="📊 {}stats".format(config["prefix"]), value="`Toutes les statistiques relatives au bot.`", inline=True)
+                    embed_news_page_1.add_field(name="Commandes pour activer ou en désactiver d'autres :", value="** **", inline=False)
+                    embed_news_page_1.add_field(name="⚖️ {}toggle".format(config["prefix"]), value="`Permet de désactiver ou activer les commandes. 🟠`", inline=True)
+                    embed_news_page_1.add_field(name="`🟠 : Requiert les permissions administrateur.`", value="** **")
+                    embed_news_page_1.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
 
-                    #Page 2 :
                     embed_news_page_2 = discord.Embed(title="⏏️ Nouveaux mots :", color=0xffab33, description="""`🟡 Baka            🟡 Nitro
 🟡 France          🟡 Hébergeur
 🟡 Snaptchat       🟡 Instagram`""")
-                    embed_news_page_2.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                    embed_news_page_2.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
 
-                    #Page 3 :
                     embed_news_page_3 = discord.Embed(title="🤟 Nouveau préfix !", color=0xffab33, description="Le_Bot possède un nouveau préfix, il s'agit désormais de `{}` au lieu de `!`.".format(config["prefix"]))
-                    embed_news_page_3.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                    embed_news_page_3.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
 
                     while True:
                         #En attente d'un choix
                         interaction = await bot.wait_for("select_option")
-                        #Si le choix est "📈 Nouvelles commandes"
                         if interaction.values[0] == '📈 Nouvelles commandes':
-                            #Il envoie l'embed de la page 1
                             await interaction.send(embed = embed_news_page_1, ephemeral=False)
 
-                        #Si le choix est "⏏️ Nouveaux mots"
                         if interaction.values[0] == '⏏️ Nouveaux mots':
-                            #Il envoie l'embed de la page 2
                             await interaction.send(embed = embed_news_page_2, ephemeral=False)
 
-                        #Si le choix est "🤟 Nouveau préfix"
                         if interaction.values[0] == '🤟 Nouveau préfix':
-                            #Il envoie l'embed de la page 3
                             await interaction.send(embed = embed_news_page_3, ephemeral=False)
 
                 #Pour éviter les erreurs inutiles dans la console
                 except:
                     time.sleep(0.1)
 
-            #Réponse du bot si la commande est désactivée
             else :
                 embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle news` pour la réactiver.".format(config["prefix"]), color=0xff0000)
-                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
-        #Définition de la commande "privacy"
         async def privacy(ctx):
             #Savoir si la commande est activée ou désactivée
-            with open('./toggle/privacy_toggle.txt', 'r') as file:
-                #Lecture du fichier avec les IDs des serveurs où la commande est désactivée
-                disabled_command = file.read().splitlines()
+            with open('./toggle/privacy_toggle.txt', 'r') as privacy_toggle_file:
+                disabled_command = privacy_toggle_file.read().splitlines()
 
-            #Récupération de l'ID du serveur actuelle
             now_id = str(ctx.message.guild.id)
 
-            #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
-                #Début de la commande "privacy"
                 embed_privacy = discord.Embed(title="🧑‍⚖ La politique de confidentialité de Le_Bot", color=0xffab33, url="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
                 embed_privacy.add_field(name="Le lien vers la politique de confidentialité :", value="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")
-                embed_privacy.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_privacy.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_privacy, components = [
                 Button(label = "🧑‍⚖ Lien", style=5, url="https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/Politique%20de%20confidentialit%C3%A9.txt")])
 
-            #Sinon réponse du bot si la commande est désactivée
             else :
                 embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle privacy` pour la réactiver.".format(config["prefix"]), color=0xff0000)
-                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
-        #Définition de la commande "serveur"
         async def server(ctx):
             #Savoir si la commande est activée ou désactivée
-            with open('./toggle/server_toggle.txt', 'r') as file:
-                #Lecture du fichier avec les IDs des serveurs où la commande est désactivée
-                disabled_command = file.read().splitlines()
+            with open('./toggle/server_toggle.txt', 'r') as server_toggle_file:
+                disabled_command = server_toggle_file.read().splitlines()
 
-            #Récupération de l'ID du serveur actuelle
             now_id = str(ctx.message.guild.id)
 
-            #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
-                #Début de la commande "serveur"
                 embed_server = discord.Embed(title="🔥 Le serveur du créateur de **Le_Bot**.", color=0xffab33, url="https://discord.gg/b6jjy5yKXV")
                 embed_server.add_field(name="Le lien du serveur de Nathoune :", value="https://discord.gg/b6jjy5yKXV")
-                embed_server.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_server.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_server, components = [
                 Button(label = "📞 Lien", style=5, url="https://discord.gg/b6jjy5yKXV")])
 
-            #Sinon réponse du bot si la commande est désactivée
             else :
                 embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle serveur` pour la réactiver.".format(config["prefix"]), color=0xff0000)
-                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_disabled_command)
-        
 
         @bot.command()
-        #Définition de la commande "gihtub"
         async def github(ctx):
             #Savoir si la commande est activée ou désactivée
-            with open('./toggle/github_toggle.txt', 'r') as file:
-                #Lecture du fichier avec les IDs des serveurs où la commande est désactivée
-                disabled_command = file.read().splitlines()
+            with open('./toggle/github_toggle.txt', 'r') as github_toggle_file:
+                disabled_command = github_toggle_file.read().splitlines()
 
-            #Récupération de l'ID du serveur actuelle
             now_id = str(ctx.message.guild.id)
 
-            #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
-                #Début de la commande "github"
                 embed_github = discord.Embed(title="🔗 Le_Bot est opensource et son code se trouve sur GitHub !", color=0xffab33, url="https://github.com/Nathoune-YT/le_bot")
                 embed_github.add_field(name="🌍 Informations", value="Le_Bot est opensource et se trouve sur GitHub (https://github.com/Nathoune-YT/le_bot). Vous pouvez simplement regarder le script, le modifier et m'envoyer une pull request pour peut-être voir vos modifications dans le code officiel de Le_Bot ou l'utiliser et le modifier tout en suivant la procédure à lire dans le README !")
-                embed_github.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_github.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_github, components = [
                 Button(label = "🔗 Lien", style=5, url="https://github.com/Nathoune-YT/le_bot")])
-            
-            #Sinon réponse du bot si la commande est désactivée
+
             else :
                 embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle github` pour la réactiver.".format(config["prefix"]), color=0xff0000)
-                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
-        #Définition de la commande "site"
         async def site(ctx):
             #Savoir si la commande est activée ou désactivée
-            with open('./toggle/site_toggle.txt', 'r') as file:
-                #Lecture du fichier avec les IDs des serveurs où la commande est désactivée
-                disabled_command = file.read().splitlines()
+            with open('./toggle/site_toggle.txt', 'r') as site_toggle_file:
+                disabled_command = site_toggle_file.read().splitlines()
 
-            #Récupération de l'ID du serveur actuelle
             now_id = str(ctx.message.guild.id)
 
-            #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
-                #Début de la commande "site"
                 embed_site = discord.Embed(title="🤌 Le site web officiel de Le_Bot", color=0xffab33, url="https://le-bot.cf")
                 embed_site.add_field(name="Le lien du site officiel :", value="https://le-bot.cf")
-                embed_site.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_site.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_site, components = [
                 Button(label = "🤌 Lien", style=5, url="https://le-bot.cf")])
 
-            #Sinon réponse du bot si la commande est désactivée
             else :
                 embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle site` pour la réactiver.".format(config["prefix"]), color=0xff0000)
-                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_disabled_command)
 
         @bot.command()
-        #Définition de la commande "ping"
         async def ping(ctx):
             #Savoir si la commande est activée ou désactivée
-            with open('./toggle/ping_toggle.txt', 'r') as file:
-                #Lecture du fichier avec les IDs des serveurs où la commande est désactivée
-                disabled_command = file.read().splitlines()
+            with open('./toggle/ping_toggle.txt', 'r') as ping_toggle_file:
+                disabled_command = ping_toggle_file.read().splitlines()
 
-            #Récupération de l'ID du serveur actuelle
             now_id = str(ctx.message.guild.id)
 
-            #Si l'ID du serveur actuel n'est pas dans le fichier
             if now_id not in disabled_command:
-                #Début de la commande "ping"
                 embed_ping = discord.Embed(title="Donc là je dois répondre 🤔 ?", color=0xffab33)
                 embed_ping.add_field(name=f"🏓 J\'ai bien reçu ton message en : `{round(bot.latency * 1000)}ms`", value=f"(je te réponds c'est le principal ok.)")
-                embed_ping.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_ping.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_ping)
 
-            #Sinon réponse du bot si la commande est désactivée
             else :
                 embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle ping` pour la réactiver.".format(config["prefix"]), color=0xff0000)
-                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_disabled_command)
 
-        #Permission administrateur pour éxécuter cette commande
+        @bot.command()
+        async def stats(ctx):
+            #Définition de la date en jours, heures, minutes en secondes pour l'uptime
+            delta_uptime = datetime.utcnow() - bot.launch_time
+            hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
+            minutes, seconds = divmod(remainder, 60)
+            days, hours = divmod(hours, 24)
+
+            #Savoir si la commande est activée ou désactivée
+            with open('./toggle/stats_toggle.txt', 'r') as stats_toggle_file:
+                disabled_command = stats_toggle_file.read().splitlines()
+
+            now_id = str(ctx.message.guild.id)
+
+            if now_id not in disabled_command:
+                embed_stats = Embed(title="📊 Statistiques", description="Voici toutes les statistiques :", color=0xffab33)
+                embed_stats.add_field(name="📈 Serveurs :", value=f"`{len(bot.guilds)}`", inline = False)
+                embed_stats.add_field(name="🏓 Ping :", value=f"`{round(bot.latency * 1000)}ms`", inline = False)
+                embed_stats.add_field(name="⌛ Connecté depuis :", value=f"`{days}j, {hours}h, {minutes}m, {seconds}s`", inline = False)
+                #Entre "<t:" et ":R>", entrez le temps en UNIX
+                embed_stats.add_field(name="⏲️ Dernières modifications :", value="<t:UNIX:R>", inline = False)
+                embed_stats.add_field(name="🚀 Utilisation RAM :", value=f"`{psutil.virtual_memory().percent}%`", inline = False)
+                embed_stats.add_field(name="🧰 Utilisation CPU :", value=f"`{psutil.cpu_percent()}%`", inline = False)
+                embed_stats.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                await ctx.send(embed=embed_stats, components = [
+                Button(label = "✏️ Changelog", style=5, url="https://github.com/Nathoune-YT/le_bot/commits/main")])
+
+            else :
+                embed_disabled_command = discord.Embed(title="🚫 La commande est désactivée.", description="Fais `{}toggle ping` pour la réactiver.".format(config["prefix"]), color=0xff0000)
+                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                await ctx.reply(embed=embed_disabled_command)
+
         @commands.has_permissions(administrator=True)
         @bot.command()
-        #Définition de la commande "toggle"
         async def toggle(ctx, command_name=None):
-            #Réponse du bot si aucune commande n'est saisie après "toggle"
             if command_name == None: 
                 embed_no_toggle = discord.Embed(title="Donne moi le nom de la commande à désactiver/activer comme ceci :", color=0xffab33)
-                embed_no_toggle.add_field(name="`{}toggle commande`".format(config["prefix"]), value="Pour retrouvez l'ensemble des commandes, fais celle ci `{}h`.".format(config["prefix"]))
-                embed_no_toggle.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_no_toggle.add_field(name="`{}toggle commande`".format(config["prefix"]), value="** **")
+                embed_no_toggle.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_no_toggle)
                 return
 
-            #Si il y en a une il essaye :
             try:
                 command = bot.get_command(command_name)
                 
-                #Si la commande existe :
                 if command.enabled :
-                    
-                    #Définition de l'ID du serveur actuel
                     now_id = str(ctx.message.guild.id)
-                    #Ouverture du fichier contenant les ID des serveurs où la commande est désactivée
-                    with open(f"./toggle/{command_name}_toggle.txt", 'r') as toggle:
-                        #Lecture des lignes
-                        remove = toggle.read().splitlines()
+                    with open(f"./toggle/{command_name}_toggle.txt", 'r') as check_id:
+                        id_file = check_id.read().splitlines()
 
-                    #Si l'ID actuelle du serveur n'est pas dans la liste il l'ajoute et donc désactive la commande
-                    if now_id not in remove:
-                        with open(f"./toggle/{command_name}_toggle.txt", "a") as file:
-                            file.write(str(f"{now_id}\n"))
-                        #Réponse du bot lors de la désactivation
+                    if now_id not in id_file:
+                        with open(f"./toggle/{command_name}_toggle.txt", "a") as disabled_command:
+                            disabled_command.write(str(f"{now_id}\n"))
                         embed_toggle_disabled = discord.Embed(title=f"❌ J'ai désactivé la commande `{command_name}`.", description="Pour la réactiver, fais `{}toggle {}`".format(config["prefix"], command_name), color=0xff0000)
-                        embed_toggle_disabled.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                        embed_toggle_disabled.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                         await ctx.reply(embed=embed_toggle_disabled)
                         return
 
-                    #Si l'ID actuelle du serveur est dans la liste, il l'a supprime et donc active la commande
                     else:
-                        file = open(f'./toggle/{command_name}_toggle.txt','r')
+                        enabled_command= open(f'./toggle/{command_name}_toggle.txt','r')
                         actual_id = [f'{now_id}']
-                        lst = []
-                        for line in file:
+                        id_server = []
+                        for line in enabled_command:
                             for word in actual_id:
                                 if word in line:
                                     line = line.replace(word,'')
-                            lst.append(line)
-                        file.close()
-                        file = open(f'./toggle/{command_name}_toggle.txt','w')
-                        for line in lst:
-                            file.write(line)
-                        file.close()
-                        #Réponse du bot lors de l'activation
+                            id_server.append(line)
+                        enabled_command.close()
+                        enabled_command = open(f'./toggle/{command_name}_toggle.txt','w')
+                        for line in id_server:
+                            enabled_command.write(line)
+                        enabled_command.close()
                         embed_toggle_enabled = discord.Embed(title=f"✅ J'ai activé la commande `{command_name}`.", description="Pour la désactiver, fais `{}toggle {}`".format(config["prefix"], command_name),color=0x00d731)
-                        embed_toggle_enabled.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                        embed_toggle_enabled.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                         await ctx.reply(embed=embed_toggle_enabled)
 
-            #Si la commande n'existe pas :
             except:
                 embed_wrong_toggle = discord.Embed(title=f"C'est pas une commande valide, t'es dyslexique ou quoi ?", description="Pour activer ou désactiver des commandes, fais `{}toggle commande`. Tu retrouves l'ensembles des commandes en faisant celle ci `{}h`.".format(config["prefix"], config["prefix"]),color=0xffab33)
-                embed_wrong_toggle.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
+                embed_wrong_toggle.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                 await ctx.reply(embed=embed_wrong_toggle)
                 return
 
-        #Permission administrateur pour éxécuter cette commande
-        @commands.has_permissions(administrator=True)
-        @bot.command()
-        #Définition de la commande "delete invites"
-        async def delete(ctx, extension):
-            try:
-                #Il essaye d'activer l'extension
-                bot.load_extension(f'cogs.{extension}')
-                embed_enabled_command = discord.Embed(title="✅ A partir de maintenant, je supprimerai les invitations vers d'autre serveurs Discord.", description="Fais `{}delete invites` pour désactiver la suppression automatique des liens d'invitations Discord.".format(config["prefix"]),color=0x00d731)
-                embed_enabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
-                await ctx.reply(embed=embed_enabled_command)
-            except:
-                #Si elle est déjà activée, il la désactive
-                bot.unload_extension(f'cogs.{extension}')
-                embed_disabled_command = discord.Embed(title="❌ A partir de maintenant, je ne supprimerai plus les invitations vers d'autre serveurs Discord.", description="Fais `{}delete invites` pour réactiver la suppression automatique des liens d'invitations Discord.".format(config["prefix"]), color=0xff0000)
-                embed_disabled_command.set_footer(text="Le_Bot, votre bot interactif !", icon_url='\nhttps://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
-                await ctx.reply(embed=embed_disabled_command)
-
-        for filename in os.listdir('./cogs'):
-            if filename.endswith('.py'):
-                bot.load_extension(f'cogs.{filename[:-3]}')
-
-        #Démarrage du bot avec le token fournit dans le fichier "config.json"
         bot.run(config["token"])
 
-    #Si il y a un problème lors du programme
     except:
-        #Il recommence la fonction "main", il n'y a donc jamais d'interruptions si le programme crash
         main()
-
-#Lancement du bot
 main()
