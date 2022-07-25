@@ -90,7 +90,7 @@ Bref, écris un petit message pour dire bonjour dans le serveur !""", value="""L
                     pass
                 else :
                     await message.delete()
-                    embed_delete_invites = discord.Embed(title = f"Fais pas ta pub :rat:", description=f"Un certain `{message.author}` a envoyé un lien d'invitation vers un autre serveur Discord :rat:. Heureusement",color=0xffab33)
+                    embed_delete_invites = discord.Embed(title = f"Fais pas ta pub :rat:", description=f"Un certain `{message.author}` a envoyé un lien d'invitation vers un autre serveur Discord :rat:. Heureusement que je suis la pour supprimer 😒",color=0xffab33)
                     embed_delete_invites.set_footer(text="Le_Bot, votre bot interactif !", icon_url='https://raw.githubusercontent.com/Nathoune-YT/le_bot/main/images/Icon.png')
                     await message.channel.send(embed = embed_delete_invites)
 
