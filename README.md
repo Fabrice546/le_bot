@@ -20,10 +20,6 @@ Le_Bot est un bot interactif qui réagit à certains mots et dynamise votre serv
 
 Le_Bot possède un site web, le voici : https://le-bot.cf
 
-La commande `help` est devenue dynamique ! Voici la démonstration :
-
-![Demo_help](https://github.com/Nathoune-YT/le_bot/blob/main/images/Demo_help.gif)
-
 Le_Bot a été certfié par Discord ! <a href="https://discord.com/oauth2/authorize?client_id=881098458482753586&permissions=10240&scope=bot"><img src="https://i.imgur.com/5dqIQGd.png" width="60"></a>
 
 [L'installation](#installation) est simple et rapide.
