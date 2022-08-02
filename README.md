@@ -36,10 +36,15 @@ Avant l'installation du code, rendez vous sur le Discord Developper Portal et co
 
 <img src="https://i.imgur.com/saaTrwl.png" width="700">
 
+Ensuite, cochez ces cases dans la génération du lien d'invitation, cela sera nécéssaire pour les commandes slash.
+
+<img src="https://i.imgur.com/OTlxlsB.jpg" width="700">
+
 Premièrement, téléchargez l'archive contenant tous les fichiers nécéssaires au bon fonctionnement du bot. Ensuite installer Python en cochant la case `ADD Python [version] TO PATH`.  
-Ouvrez un CMD à l'emplcament de vos fichiers. Éxecutez cette commande `pip install -r requirements.txt`.  
+Ouvrez un CMD à l'emplcament de vos fichiers. Éxecutez cette commande `pip install -r requirements.txt`.
+Si vous obtenez une erreur en rapport avec Git, je vous invite à l'installer (https://git-scm.com/downloads). Une fois l'installation terminée, relancez la commande `pip install -r requirements.txt`.
 Renseignez le token de votre bot dans le fichier `config.json`.  
-Renseignez le prefix de votre bot dans le fichier `config.json`.  
+Renseignez le prefix de votre bot dans le fichier `config.json` même si Le_Bot est passé aux commandes slash, le prefix sert juste à répondre aux utilisateurs qui souhaiteraient encore utiliser les anciennes commandes.
 Vous pouvez ajouter ou supprimer les mots auxquels Le_Bot réagit dans le fichier `liste.json`. `name` correspond aux mots auxquels Le_Bot réagit, vous n'avez pas besoin de mettre toutes les déclinaisons du mot (exemple : Salut ; sAlut ; saLut...), le script prend en compte ce paramètre. `value` correpond à la réponse de Le_Bot. 
 
 Vous trouverez dans le dossier `toggle` des fichiers textes au nom de chaques commandes proposées par Le_Bot. Dans ces fichiers textes seront stockés les IDs des serveurs qui auront désactivés une de ses commandes. Le_Bot vérifira à chaque utilisation d'une commande si l'ID du seveur sur lequel la commande a été demandée est présente dans un de ces fichiers texte et adaptera sa réponse pour activer ou non la commande. 
