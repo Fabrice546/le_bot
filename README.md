@@ -45,6 +45,8 @@ Vous pouvez ajouter ou supprimer les mots auxquels Le_Bot réagit dans le fichie
 
 Vous trouverez dans le dossier `toggle` des fichiers textes au nom de chaques commandes proposées par Le_Bot. Dans ces fichiers textes seront stockés les IDs des serveurs qui auront désactivés une de ses commandes. Le_Bot vérifira à chaque utilisation d'une commande si l'ID du seveur sur lequel la commande a été demandée est présente dans un de ces fichiers texte et adaptera sa réponse pour activer ou non la commande. 
 
+Précision pour les émojis. Vous pouvez voir dans le code que certains émojis sont définis comme ceci `<:nom:id>`. Vous n'aurez pas l'émoji car il faut que votre bot soit dans le serveur d'où provient l'émoji. Dans le dossier `emoji` se trouvent toutes les images qui correspondantes aux émojis. Il vous suffit de les upload sur un serveur discord dans lequel il y a votre bot. Ensuite dans votre serveur discord fraîchement créé, envoyez `\:nom_de_l'emoji:`. Vous obtenerez le même format `<:nom:id>`. Il vous suffira de remplacer tous les émojis par ce que vous obtenez !
+
 Lancer `Le_Bot.py` et votre bot sera en ligne !
 
 Voici l'interface que vous aurez si l'installation et la mise en ligne se sont bien passé :
