@@ -1,5 +1,5 @@
-discord
-discord-components
+git+https://github.com/Rapptz/discord.py
+typing
 colorama
 psutil
 datetime
